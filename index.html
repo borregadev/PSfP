@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Problem Solving for Programming - Mobile Study Guide</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --accent-light: rgba(56, 189, 248, 0.15);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --success: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 12px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 15px 0 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: var(--accent);
+      margin: 0 0 5px 0;
+      font-size: 1.6rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Top-Level Session Navigation */
+    .session-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .session-btn {
+      flex: 1;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      color: var(--text-muted);
+      padding: 12px 10px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .session-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* Horizontal Scrollable Sub-Tab Navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 20px;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 5px;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Tab Content Panels */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card Components */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-top: 0;
+      font-size: 1.25rem;
+    }
+
+    /* Mobile Adaptive Grids */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .interactive-item {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .interactive-item:active {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    .step-letter {
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+      background: var(--accent);
+      color: #0f172a;
+      font-weight: bold;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 26px;
+      margin-right: 6px;
+      font-size: 0.85rem;
+    }
+
+    .item-details {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+    }
+
+    /* Mobile Responsive Diagrams */
+    .diagram-box {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 8px;
+      text-align: center;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    .diagram-box svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Responsive Flowchart Symbol Table */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .symbol-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.88rem;
+    }
+
+    .symbol-table th, .symbol-table td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+    }
+
+    .symbol-table th {
+      background: #0f172a;
+      color: var(--accent);
+    }
+
+    .symbol-svg-cell {
+      text-align: center;
+      width: 80px;
+    }
+
+    /* Code Block Display */
+    .code-box {
+      background-color: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: "Courier New", Courier, monospace;
+      color: var(--accent);
+      font-size: 0.88rem;
+      overflow-x: auto;
+    }
+
+    /* Flashcards */
+    .flashcard {
+      width: 100%;
+      min-height: 160px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      cursor: pointer;
+      font-size: 1.05rem;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+    }
+
+    .btn {
+      background-color: var(--accent);
+      color: #0f172a;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .btn:active {
+      background-color: var(--accent-hover);
+    }
+
+    ul, ol {
+      padding-left: 18px;
+      margin: 5px 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+    }
+
+    /* Touch screen tweaks */
+    @media (max-width: 600px) {
+      body { padding: 8px; }
+      h1 { font-size: 1.4rem; }
+      .session-btn { font-size: 0.85rem; padding: 10px 6px; }
+      .card { padding: 14px; }
+      .grid-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Problem Solving for Programming</h1>
+      <div class="subtitle">Mobile Study Hub & Visual Notes</div>
+    </header>
+
+    <!-- TOP-LEVEL SESSION SWITCHER -->
+    <div class="session-nav">
+      <button class="session-btn active" id="s1-main-btn" onclick="switchSession('s1')">Session 1</button>
+      <button class="session-btn" id="s2-main-btn" onclick="switchSession('s2')">Session 2</button>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- SESSION 1 CONTAINER -->
+    <!-- ================================================================= -->
+    <div id="session1-container">
+      <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchSubTab('s1', 'overview')">Overview</button>
+        <button class="tab-btn" onclick="switchSubTab('s1', 'sdlc')">SDLC & Software</button>
+        <button class="tab-btn" onclick="switchSubTab('s1', 'framework')">HTTLAP</button>
+        <button class="tab-btn" onclick="switchSubTab('s1', 'mindset')">Mindset & Pioneers</button>
+        <button class="tab-btn" onclick="switchSubTab('s1', 'quiz')">Quiz</button>
+      </nav>
+
+      <!-- S1: OVERVIEW -->
+      <div id="s1-overview" class="tab-panel active">
+        <div class="card">
+          <h2>Module Core Purpose</h2>
+          <p>This module does <strong>not</strong> teach a specific programming language. Instead, it teaches the foundational problem-solving and algorithmic logic skills needed to learn and program in <em>any</em> programming language.</p>
+        </div>
+
+        <div class="card">
+          <h2>Time Allocation</h2>
+          <p>Most of a software developer's time is spent solving problems rather than typing code:</p>
+          <div class="diagram-box">
+            <svg viewBox="0 0 500 80">
+              <rect x="10" y="20" width="330" height="40" rx="6" fill="#38bdf8" />
+              <text x="175" y="45" fill="#0f172a" font-weight="bold" font-size="13" text-anchor="middle">Problem Solving (~70%)</text>
+              <rect x="350" y="20" width="140" height="40" rx="6" fill="#0284c7" />
+              <text x="420" y="45" fill="#ffffff" font-weight="bold" font-size="13" text-anchor="middle">Coding (~30%)</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Key Principles</h2>
+          <ul>
+            <li><strong>Programming Defined:</strong> Writing detailed instructions for a computer to carry out specific tasks.</li>
+            <li><strong>Core Competencies:</strong> Logical reasoning, attention to detail, and mathematical reasoning.</li>
+            <li><strong>Progression Path:</strong> Commitment, daily practice, repetition, curiosity, and research.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S1: SDLC -->
+      <div id="s1-sdlc" class="tab-panel">
+        <div class="card">
+          <h2>Software Development Life Cycle (SDLC)</h2>
+          <p>Software development follows a cyclical sequence of six key stages:</p>
+          
+          <div class="diagram-box">
+            <svg viewBox="0 0 600 130">
+              <g font-size="11" font-weight="bold" text-anchor="middle">
+                <circle cx="50" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="50" y="54" fill="#38bdf8">1. Plan</text>
+                
+                <circle cx="150" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="150" y="54" fill="#38bdf8">2. Analyse</text>
+                
+                <circle cx="250" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="250" y="54" fill="#38bdf8">3. Design</text>
+                
+                <circle cx="350" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="350" y="54" fill="#38bdf8">4. Code</text>
+                
+                <circle cx="450" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="450" y="54" fill="#38bdf8">5. Test</text>
+                
+                <circle cx="550" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="550" y="54" fill="#38bdf8">6. Maintain</text>
+
+                <path d="M 550 85 C 300 130 300 130 50 85" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4"/>
+              </g>
+            </svg>
+          </div>
+
+          <ol>
+            <li><strong>Planning:</strong> Plan the overall project scope.</li>
+            <li><strong>Analysis:</strong> Define requirements and specifications.</li>
+            <li><strong>Design:</strong> Design the system architecture.</li>
+            <li><strong>Implementation:</strong> Code and build software modules.</li>
+            <li><strong>Testing & Integration:</strong> Evaluate and merge code.</li>
+            <li><strong>Maintain:</strong> Fix bugs and implement updates.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h2>Categories of Software</h2>
+          <ul>
+            <li><strong>Systems Software:</strong> Drives hardware (e.g., Windows, macOS, Linux).</li>
+            <li><strong>Application Software:</strong> Performs user tasks (e.g., Office, Minecraft, Email).</li>
+            <li><strong>Software Tools:</strong> Languages to build software (e.g., Python, C++, Java).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S1: FRAMEWORK -->
+      <div id="s1-framework" class="tab-panel">
+        <div class="card">
+          <h2>The HTTLAP Framework</h2>
+          <p>Tap each step to view full details:</p>
+          
+          <div class="grid-container">
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">U</span><strong>Understand</strong>
+              <div class="item-details">
+                Determine problem type, break it into parts, identify knowns/unknowns, and remove ambiguity.
+              </div>
+            </div>
+
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">P</span><strong>Plan</strong>
+              <div class="item-details">
+                Apply lessons from past problems, decide representations, and choose problem-solving techniques.
+              </div>
+            </div>
+
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">A</span><strong>Action / Solve</strong>
+              <div class="item-details">
+                Write down your solution. Pay attention to sequence, selection, and iteration.
+              </div>
+            </div>
+
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">A</span><strong>Assess</strong>
+              <div class="item-details">
+                Never assume the result is correct. Test with different inputs and verify consistency.
+              </div>
+            </div>
+
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">R</span><strong>Reflect</strong>
+              <div class="item-details">
+                Keep a learning journal. Reflect on strengths, weaknesses, and generalise solutions.
+              </div>
+            </div>
+
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">D</span><strong>Document</strong>
+              <div class="item-details">
+                Ensure readability so future programmers can easily understand your method.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Problem-Solving Techniques</h2>
+          <ul>
+            <li><strong>Visual Representation:</strong> Diagrams, tables, and charts.</li>
+            <li><strong>Simpler Analogous Problems:</strong> Solve smaller versions first.</li>
+            <li><strong>Finding Patterns:</strong> Leverage structural logic.</li>
+            <li><strong>Intelligent Guessing:</strong> Systematic elimination.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S1: MINDSET -->
+      <div id="s1-mindset" class="tab-panel">
+        <div class="card">
+          <h2>Mindset & Detail Orientation</h2>
+          <ul>
+            <li><strong>Mathematical Reasoning:</strong> Essential logical base for programmers.</li>
+            <li><strong>Analytical Deconstruction:</strong> Check for all failure points.</li>
+            <li><strong>Continuous Refactoring:</strong> Never assume code is optimal because it runs.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Historical Pioneers in Computing</h2>
+          <div class="grid-container">
+            <div class="interactive-item">
+              <strong>Ada Lovelace (1843)</strong>
+              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">First computer programmer; wrote algorithms for Charles Babbage's engine.</p>
+            </div>
+            <div class="interactive-item">
+              <strong>Kathleen Booth (1946–1962)</strong>
+              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Invented assembly language and built assemblers at Birkbeck.</p>
+            </div>
+            <div class="interactive-item">
+              <strong>Xia Peisu (1960)</strong>
+              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Developed Model 107, China's first electronic computer.</p>
+            </div>
+            <div class="interactive-item">
+              <strong>Steve Wozniak (1970s)</strong>
+              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Designed Apple-I and Apple-II personal computers.</p>
+            </div>
+            <div class="interactive-item">
+              <strong>Dr. Gladys Mae West (1985)</strong>
+              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Calculated mathematical models enabling GPS precision.</p>
+            </div>
+            <div class="interactive-item">
+              <strong>Raj Reddy (1994)</strong>
+              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">AI Pioneer and Turing Award recipient.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S1: QUIZ -->
+      <div id="s1-quiz" class="tab-panel">
+        <div class="card">
+          <h2>Session 1 Self-Test</h2>
+          <p style="font-size:0.88rem;">Tap card to flip answer:</p>
+          <div class="flashcard" id="s1-card" onclick="flipFlashcard('s1')">
+            <span id="s1-card-text">Loading...</span>
+          </div>
+          <div class="controls">
+            <button class="btn" onclick="prevFlashcard('s1')">Prev</button>
+            <span id="s1-card-counter" style="font-size:0.85rem;">1 / 5</span>
+            <button class="btn" onclick="nextFlashcard('s1')">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- SESSION 2 CONTAINER -->
+    <!-- ================================================================= -->
+    <div id="session2-container" style="display:none;">
+      <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchSubTab('s2', 'algorithms')">Algorithms</button>
+        <button class="tab-btn" onclick="switchSubTab('s2', 'constructs')">3 Constructs</button>
+        <button class="tab-btn" onclick="switchSubTab('s2', 'flowcharts')">Flowcharts</button>
+        <button class="tab-btn" onclick="switchSubTab('s2', 'pseudocode')">Pseudocode</button>
+        <button class="tab-btn" onclick="switchSubTab('s2', 'testing')">Testing</button>
+        <button class="tab-btn" onclick="switchSubTab('s2', 'quiz')">Quiz</button>
+      </nav>
+
+      <!-- S2: ALGORITHMS -->
+      <div id="s2-algorithms" class="tab-panel active">
+        <div class="card">
+          <h2>Solution to Program Pipeline</h2>
+          <p>Express natural language solutions as algorithms before writing code:</p>
+          
+          <div class="diagram-box">
+            <svg viewBox="0 0 500 80">
+              <rect x="10" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <text x="75" y="44" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Solution</text>
+
+              <line x1="145" y1="40" x2="180" y2="40" stroke="#38bdf8" stroke-width="2"/>
+
+              <rect x="185" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <text x="250" y="44" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Algorithm</text>
+
+              <line x1="320" y1="40" x2="355" y2="40" stroke="#0284c7" stroke-width="2"/>
+
+              <rect x="360" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="2"/>
+              <text x="425" y="44" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Program</text>
+            </svg>
+          </div>
+
+          <ul>
+            <li><strong>Algorithm:</strong> A finite, structured set of step-by-step instructions.</li>
+            <li><strong>Computer Models:</strong> Simplified representations to simulate systems safely.</li>
+            <li><strong>Generalisability:</strong> Algorithms solve all variations of a given problem.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Abstraction & Optimisation</h2>
+          <ul>
+            <li><strong>Abstraction:</strong> Removing unnecessary lower-level detail. Uses <em>Hierarchical Task Analysis (HTA)</em> or <em>Top-Down Refinement</em>.</li>
+            <li><strong>Optimal Algorithm:</strong>
+              <ol>
+                <li>Uses minimum execution steps.</li>
+                <li>Avoids errors under unforeseen conditions.</li>
+                <li>Features modular components designed for reusability.</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S2: CONSTRUCTS -->
+      <div id="s2-constructs" class="tab-panel">
+        <div class="card">
+          <h2>3 Basic Constructs</h2>
+          <p>Any computational problem can be solved using these three constructs:</p>
+          
+          <div class="grid-container">
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">1</span><strong>Sequence</strong>
+              <div class="item-details">
+                The precise logical order in which steps are executed.
+              </div>
+            </div>
+
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">2</span><strong>Selection</strong>
+              <div class="item-details">
+                Branching execution paths based on logical conditions (IF/ELSE).
+              </div>
+            </div>
+
+            <div class="interactive-item" onclick="toggleDetails(this)">
+              <span class="step-letter">3</span><strong>Iteration</strong>
+              <div class="item-details">
+                Repeating steps until a condition is met (FOR/WHILE loops).
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2: FLOWCHARTS -->
+      <div id="s2-flowcharts" class="tab-panel">
+        <div class="card">
+          <h2>Flowchart Standard Symbols</h2>
+          <p>Flowcharts visually show logical constructs vertically in columnar order.</p>
+
+          <div class="table-wrapper">
+            <table class="symbol-table">
+              <thead>
+                <tr>
+                  <th class="symbol-svg-cell">Shape</th>
+                  <th>Name</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="symbol-svg-cell">
+                    <svg width="60" height="28" viewBox="0 0 60 28">
+                      <rect x="2" y="2" width="56" height="24" rx="12" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                    </svg>
+                  </td>
+                  <td><strong>Oval</strong></td>
+                  <td>Start / End entry or termination.</td>
+                </tr>
+                <tr>
+                  <td class="symbol-svg-cell">
+                    <svg width="60" height="20" viewBox="0 0 60 20">
+                      <line x1="5" y1="10" x2="48" y2="10" stroke="#38bdf8" stroke-width="2"/>
+                      <polygon points="48,6 56,10 48,14" fill="#38bdf8"/>
+                    </svg>
+                  </td>
+                  <td><strong>Arrow</strong></td>
+                  <td>Direction of control flow.</td>
+                </tr>
+                <tr>
+                  <td class="symbol-svg-cell">
+                    <svg width="60" height="28" viewBox="0 0 60 28">
+                      <polygon points="10,4 56,4 48,24 2,24" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                    </svg>
+                  </td>
+                  <td><strong>Parallelogram</strong></td>
+                  <td>Input / Output operations.</td>
+                </tr>
+                <tr>
+                  <td class="symbol-svg-cell">
+                    <svg width="60" height="28" viewBox="0 0 60 28">
+                      <rect x="2" y="4" width="56" height="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                    </svg>
+                  </td>
+                  <td><strong>Rectangle</strong></td>
+                  <td>Internal process / calculations.</td>
+                </tr>
+                <tr>
+                  <td class="symbol-svg-cell">
+                    <svg width="60" height="30" viewBox="0 0 60 30">
+                      <polygon points="30,2 56,15 30,28 4,15" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                    </svg>
+                  </td>
+                  <td><strong>Diamond</strong></td>
+                  <td>Conditional Decision point.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2: PSEUDOCODE -->
+      <div id="s2-pseudocode" class="tab-panel">
+        <div class="card">
+          <h2>Pseudocode Standards (Gaddis Style)</h2>
+          <ul>
+            <li>Each statement is numbered on its own line ending with `;`.</li>
+            <li>Begins with <code>PROGRAM &lt;Title&gt;</code> and ends with <code>END</code>.</li>
+            <li>Keywords are written in UPPERCASE.</li>
+          </ul>
+
+          <div class="code-box">
+PROGRAM &lt;SnackVending&gt;<br>
+1. Process payment;<br>
+2. Make selection;<br>
+3. Dispense snack;<br>
+4. Return change;<br>
+END
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Pros & Cons of Pseudocode</h2>
+          <div class="grid-container">
+            <div class="interactive-item">
+              <strong style="color:var(--accent);">Advantages</strong>
+              <ul style="font-size:0.82rem; margin-top:4px; color:var(--text-muted);">
+                <li>Language independent; easy to read.</li>
+                <li>Focuses strictly on logic.</li>
+              </ul>
+            </div>
+            <div class="interactive-item">
+              <strong style="color:#ef4444;">Disadvantages</strong>
+              <ul style="font-size:0.82rem; margin-top:4px; color:var(--text-muted);">
+                <li>Time-consuming to update manually.</li>
+                <li>Cannot be directly executed on a computer.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2: TESTING -->
+      <div id="s2-testing" class="tab-panel">
+        <div class="card">
+          <h2>4 Testing Stages</h2>
+          <ol>
+            <li><strong>1. Unit Testing:</strong> Testing individual functions/modules.</li>
+            <li><strong>2. Integration Testing:</strong> Verifying modules work together.</li>
+            <li><strong>3. System Testing:</strong> Usability and accessibility evaluation.</li>
+            <li><strong>4. Acceptance Testing:</strong> User satisfaction check.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- S2: QUIZ -->
+      <div id="s2-quiz" class="tab-panel">
+        <div class="card">
+          <h2>Session 2 Self-Test</h2>
+          <p style="font-size:0.88rem;">Tap card to flip answer:</p>
+          <div class="flashcard" id="s2-card" onclick="flipFlashcard('s2')">
+            <span id="s2-card-text">Loading...</span>
+          </div>
+          <div class="controls">
+            <button class="btn" onclick="prevFlashcard('s2')">Prev</button>
+            <span id="s2-card-counter" style="font-size:0.85rem;">1 / 5</span>
+            <button class="btn" onclick="nextFlashcard('s2')">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Session Switcher
+    function switchSession(sessionId) {
+      const s1Container = document.getElementById('session1-container');
+      const s2Container = document.getElementById('session2-container');
+      const s1Btn = document.getElementById('s1-main-btn');
+      const s2Btn = document.getElementById('s2-main-btn');
+
+      if (sessionId === 's1') {
+        s1Container.style.display = 'block';
+        s2Container.style.display = 'none';
+        s1Btn.className = 'session-btn active';
+        s2Btn.className = 'session-btn';
+      } else {
+        s1Container.style.display = 'none';
+        s2Container.style.display = 'block';
+        s1Btn.className = 'session-btn';
+        s2Btn.className = 'session-btn active';
+      }
+    }
+
+    // Sub-Tab Switcher
+    function switchSubTab(sessionPrefix, tabId) {
+      const container = document.getElementById(`${sessionPrefix === 's1' ? 'session1' : 'session2'}-container`);
+      container.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      
+      document.getElementById(`${sessionPrefix}-${tabId}`).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    // Toggle Collapsible Step Details
+    function toggleDetails(element) {
+      const details = element.querySelector('.item-details');
+      if (details) {
+        const isVisible = details.style.display === 'block';
+        details.style.display = isVisible ? 'none' : 'block';
+      }
+    }
+
+    // Flashcard System State
+    const quizData = {
+      s1: {
+        index: 0,
+        flipped: false,
+        cards: [
+          { q: "What is the primary goal of this module?", a: "To teach foundational problem-solving skills needed to program in ANY language." },
+          { q: "Where is most time spent during software development?", a: "Solving problems, rather than writing actual code." },
+          { q: "What are the 6 stages of the SDLC?", a: "1. Planning, 2. Analysis, 3. Design, 4. Implementation, 5. Testing/Integration, 6. Maintenance." },
+          { q: "What does HTTLAP stand for?", a: "Understand, Plan, Action (Solve), Assess, Reflect, Document." },
+          { q: "Who wrote the first assembly language at Birkbeck College?", a: "Kathleen Booth (1946–1962)." }
+        ]
+      },
+      s2: {
+        index: 0,
+        flipped: false,
+        cards: [
+          { q: "What is an algorithm?", a: "A finite, structured set of step-by-step instructions designed to complete a task." },
+          { q: "What are the 3 core algorithmic constructs?", a: "Sequence, Selection, and Iteration." },
+          { q: "Which flowchart shape represents Input and Output?", a: "A Parallelogram." },
+          { q: "Which pseudocode keyword style is used in this module?", a: "The Gaddis Book Style (UPPERCASE keywords, numbered lines ending in semicolons)." },
+          { q: "What are the 4 chronological stages of software testing?", a: "1. Unit testing, 2. Integration testing, 3. System testing, 4. Acceptance testing." }
+        ]
+      }
+    };
+
+    function updateFlashcard(session) {
+      const state = quizData[session];
+      const textEl = document.getElementById(`${session}-card-text`);
+      const counterEl = document.getElementById(`${session}-card-counter`);
+      
+      state.flipped = false;
+      textEl.innerText = state.cards[state.index].q;
+      counterEl.innerText = `${state.index + 1} / ${state.cards.length}`;
+    }
+
+    function flipFlashcard(session) {
+      const state = quizData[session];
+      const textEl = document.getElementById(`${session}-card-text`);
+      state.flipped = !state.flipped;
+      textEl.innerText = state.flipped ? state.cards[state.index].a : state.cards[state.index].q;
+    }
+
+    function nextFlashcard(session) {
+      const state = quizData[session];
+      state.index = (state.index + 1) % state.cards.length;
+      updateFlashcard(session);
+    }
+
+    function prevFlashcard(session) {
+      const state = quizData[session];
+      state.index = (state.index - 1 + state.cards.length) % state.cards.length;
+      updateFlashcard(session);
+    }
+
+    // Initialise Flashcards
+    updateFlashcard('s1');
+    updateFlashcard('s2');
+  </script>
+</body>
+</html>
