@@ -1,1084 +1,666 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Problem Solving for Programming</title>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --accent: #38bdf8;
-      --accent-hover: #0284c7;
-      --accent-light: rgba(56, 189, 248, 0.15);
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #334155;
-      --success: #22c55e;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Solving for Programming</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome v6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        },
+                        cyanAccent: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                        roseAccent: {
+                            400: '#f472b6',
+                            500: '#ec4899',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #070b12;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(236, 72, 153, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #cbd5e1;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+        /* Glassmorphic Container */
+        .glass-card {
+            background: rgba(18, 24, 38, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 12px;
-      line-height: 1.5;
-    }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-    }
+        .glass-card-hover:hover {
+            border-color: rgba(129, 140, 248, 0.3);
+            box-shadow: 0 12px 40px -10px rgba(99, 102, 241, 0.25);
+            transform: translateY(-2px);
+        }
 
-    header {
-      text-align: center;
-      padding: 15px 0 20px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
-    }
+        /* Glow Effects */
+        .glow-brand {
+            box-shadow: 0 0 20px -3px rgba(99, 102, 241, 0.5);
+        }
 
-    h1 {
-      color: var(--accent);
-      margin: 0 0 5px 0;
-      font-size: 1.6rem;
-    }
+        /* Hide Scrollbar for Nav Pill Row */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* Top-Level Session Navigation */
-    .session-nav {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-
-    .session-btn {
-      flex: 1;
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      color: var(--text-muted);
-      padding: 10px 6px;
-      font-size: 0.88rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-    }
-
-    .session-btn.active {
-      border-color: var(--accent);
-      background: var(--accent-light);
-      color: var(--accent);
-    }
-
-    /* Horizontal Scrollable Sub-Tab Navigation */
-    .nav-tabs {
-      display: flex;
-      gap: 8px;
-      border-bottom: 2px solid var(--border);
-      margin-bottom: 20px;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 5px;
-    }
-
-    .nav-tabs::-webkit-scrollbar {
-      display: none;
-    }
-
-    .tab-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      padding: 10px 14px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    /* Tab Content Panels */
-    .tab-panel {
-      display: none;
-    }
-
-    .tab-panel.active {
-      display: block;
-      animation: fadeIn 0.25s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Card Components */
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    h2 {
-      color: var(--accent);
-      margin-top: 0;
-      font-size: 1.25rem;
-    }
-
-    /* Mobile Adaptive Grids */
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 12px;
-    }
-
-    .interactive-item {
-      background: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 14px;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .interactive-item:active {
-      border-color: var(--accent);
-      background: rgba(56, 189, 248, 0.05);
-    }
-
-    .step-letter {
-      display: inline-block;
-      width: 26px;
-      height: 26px;
-      background: var(--accent);
-      color: #0f172a;
-      font-weight: bold;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 26px;
-      margin-right: 6px;
-      font-size: 0.85rem;
-    }
-
-    .item-details {
-      display: none;
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      padding-top: 8px;
-    }
-
-    /* Mobile Responsive Diagrams */
-    .diagram-box {
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 8px;
-      text-align: center;
-      margin: 12px 0;
-      overflow-x: auto;
-    }
-
-    .diagram-box svg {
-      max-width: 100%;
-      height: auto;
-    }
-
-    /* Responsive Symbol & Data Table */
-    .table-wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .symbol-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-      font-size: 0.88rem;
-    }
-
-    .symbol-table th, .symbol-table td {
-      border: 1px solid var(--border);
-      padding: 10px;
-      text-align: left;
-    }
-
-    .symbol-table th {
-      background: #0f172a;
-      color: var(--accent);
-    }
-
-    .symbol-svg-cell {
-      text-align: center;
-      width: 80px;
-    }
-
-    /* Code Block Display */
-    .code-box {
-      background-color: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 12px;
-      font-family: "Courier New", Courier, monospace;
-      color: var(--accent);
-      font-size: 0.88rem;
-      overflow-x: auto;
-    }
-
-    /* Flashcards */
-    .flashcard {
-      width: 100%;
-      min-height: 160px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--accent);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
-      cursor: pointer;
-      font-size: 1.05rem;
-      user-select: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 15px;
-    }
-
-    .btn {
-      background-color: var(--accent);
-      color: #0f172a;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .btn:active {
-      background-color: var(--accent-hover);
-    }
-
-    ul, ol {
-      padding-left: 18px;
-      margin: 5px 0;
-    }
-
-    li {
-      margin-bottom: 6px;
-      font-size: 0.92rem;
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 8px; }
-      h1 { font-size: 1.4rem; }
-      .session-btn { font-size: 0.82rem; padding: 10px 4px; }
-      .card { padding: 14px; }
-      .grid-container { grid-template-columns: 1fr; }
-    }
-  </style>
+        /* Active Navigation Pill */
+        .tab-btn.active {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
 
-  <div class="container">
-    <header>
-      <h1>Problem Solving for Programming</h1>
-      <div class="subtitle">Mobile Study Hub & Visual Notes</div>
+    <!-- Fixed Top Header -->
+    <header class="bg-slate-950/70 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-gradient-to-br from-brand-600 to-cyanAccent-500 rounded-xl text-white shadow-lg glow-brand flex items-center justify-center">
+                    <i class="fa-solid fa-code text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-slate-300">
+                        Problem Solving for Programming
+                    </h1>
+                    <p class="text-xs text-slate-400 font-medium">Birkbeck College • Interactive Lecture & Lab Summary</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Tab Navigation Bar -->
+        <nav class="bg-slate-950/40 border-t border-white/5 px-4 sm:px-6 lg:px-8 py-2">
+            <div class="max-w-7xl mx-auto flex items-center space-x-2 overflow-x-auto no-scrollbar" id="tabNav">
+                <button onclick="switchTab('session1')" id="tab-session1" class="tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-400 hover:bg-slate-800/50 transition-all whitespace-nowrap flex items-center gap-2">
+                    <i class="fa-solid fa-brain"></i>
+                    Session 1: Programming & Problem Solving
+                </button>
+                <button onclick="switchTab('session2')" id="tab-session2" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-400 hover:bg-slate-800/50 transition-all whitespace-nowrap flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap"></i>
+                    Session 2: Representing Solutions
+                </button>
+                <button onclick="switchTab('session3')" id="tab-session3" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-400 hover:bg-slate-800/50 transition-all whitespace-nowrap flex items-center gap-2">
+                    <i class="fa-solid fa-terminal"></i>
+                    Session 3: I/O & Data Operations
+                </button>
+            </div>
+        </nav>
     </header>
 
-    <!-- TOP-LEVEL SESSION SWITCHER -->
-    <div class="session-nav">
-      <button class="session-btn active" id="s1-main-btn" onclick="switchSession('s1')">Session 1</button>
-      <button class="session-btn" id="s2-main-btn" onclick="switchSession('s2')">Session 2</button>
-      <button class="session-btn" id="s3-main-btn" onclick="switchSession('s3')">Session 3</button>
-    </div>
+    <!-- Main Canvas -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- ================================================================= -->
-    <!-- SESSION 1 CONTAINER -->
-    <!-- ================================================================= -->
-    <div id="session1-container">
-      <nav class="nav-tabs">
-        <button class="tab-btn active" onclick="switchSubTab('s1', 'overview')">Overview</button>
-        <button class="tab-btn" onclick="switchSubTab('s1', 'sdlc')">SDLC & Software</button>
-        <button class="tab-btn" onclick="switchSubTab('s1', 'framework')">HTTLAP</button>
-        <button class="tab-btn" onclick="switchSubTab('s1', 'mindset')">Mindset & Pioneers</button>
-        <button class="tab-btn" onclick="switchSubTab('s1', 'quiz')">Quiz</button>
-      </nav>
-
-      <!-- S1: OVERVIEW -->
-      <div id="s1-overview" class="tab-panel active">
-        <div class="card">
-          <h2>Module Core Purpose</h2>
-          <p>This module does <strong>not</strong> teach a specific programming language. Instead, it teaches the foundational problem-solving and algorithmic logic skills needed to learn and program in <em>any</em> programming language.</p>
-        </div>
-
-        <div class="card">
-          <h2>Time Allocation</h2>
-          <p>Most of a software developer's time is spent solving problems rather than typing code:</p>
-          <div class="diagram-box">
-            <svg viewBox="0 0 500 80">
-              <rect x="10" y="20" width="330" height="40" rx="6" fill="#38bdf8" />
-              <text x="175" y="45" fill="#0f172a" font-weight="bold" font-size="13" text-anchor="middle">Problem Solving (~70%)</text>
-              <rect x="350" y="20" width="140" height="40" rx="6" fill="#0284c7" />
-              <text x="420" y="45" fill="#ffffff" font-weight="bold" font-size="13" text-anchor="middle">Coding (~30%)</text>
-            </svg>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Key Principles</h2>
-          <ul>
-            <li><strong>Programming Defined:</strong> Writing detailed instructions for a computer to carry out specific tasks.</li>
-            <li><strong>Core Competencies:</strong> Logical reasoning, attention to detail, and mathematical reasoning.</li>
-            <li><strong>Progression Path:</strong> Commitment, daily practice, repetition, curiosity, and research.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- S1: SDLC -->
-      <div id="s1-sdlc" class="tab-panel">
-        <div class="card">
-          <h2>Software Development Life Cycle (SDLC)</h2>
-          <p>Software development follows a cyclical sequence of six key stages:</p>
-          
-          <div class="diagram-box">
-            <svg viewBox="0 0 600 130">
-              <g font-size="11" font-weight="bold" text-anchor="middle">
-                <circle cx="50" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="50" y="54" fill="#38bdf8">1. Plan</text>
-                
-                <circle cx="150" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="150" y="54" fill="#38bdf8">2. Analyse</text>
-                
-                <circle cx="250" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="250" y="54" fill="#38bdf8">3. Design</text>
-                
-                <circle cx="350" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="350" y="54" fill="#38bdf8">4. Code</text>
-                
-                <circle cx="450" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="450" y="54" fill="#38bdf8">5. Test</text>
-                
-                <circle cx="550" cy="50" r="30" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="550" y="54" fill="#38bdf8">6. Maintain</text>
-
-                <path d="M 550 85 C 300 130 300 130 50 85" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4"/>
-              </g>
-            </svg>
-          </div>
-
-          <ol>
-            <li><strong>Planning:</strong> Plan the overall project scope.</li>
-            <li><strong>Analysis:</strong> Define requirements and specifications.</li>
-            <li><strong>Design:</strong> Design the system architecture.</li>
-            <li><strong>Implementation:</strong> Code and build software modules.</li>
-            <li><strong>Testing & Integration:</strong> Evaluate and merge code.</li>
-            <li><strong>Maintain:</strong> Fix bugs and implement updates.</li>
-          </ol>
-        </div>
-
-        <div class="card">
-          <h2>Categories of Software</h2>
-          <ul>
-            <li><strong>Systems Software:</strong> Drives hardware (e.g., Windows, macOS, Linux).</li>
-            <li><strong>Application Software:</strong> Performs user tasks (e.g., Office, Minecraft, Email).</li>
-            <li><strong>Software Tools:</strong> Languages to build software (e.g., Python, C++, Java).</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- S1: FRAMEWORK -->
-      <div id="s1-framework" class="tab-panel">
-        <div class="card">
-          <h2>The HTTLAP Framework</h2>
-          <p>Tap each step to view full details:</p>
-          
-          <div class="grid-container">
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">U</span><strong>Understand</strong>
-              <div class="item-details">
-                Determine problem type, break it into parts, identify knowns/unknowns, and remove ambiguity.
-              </div>
+        <!-- ================= SESSION 1 CONTENT ================= -->
+        <section id="session1" class="tab-content block space-y-8">
+            <!-- Title Banner -->
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-1 flex items-center gap-3">
+                    <span class="p-2 bg-brand-500/20 text-brand-400 rounded-lg text-lg flex items-center justify-center">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </span>
+                    Session 1: Programming & Problem Solving
+                </h2>
+                <p class="text-slate-300 text-sm ml-11">Core concepts, Software Development Life Cycle (SDLC), and the HTTLAP problem-solving framework.</p>
             </div>
 
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">P</span><strong>Plan</strong>
-              <div class="item-details">
-                Apply lessons from past problems, decide representations, and choose problem-solving techniques.
-              </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- SDLC Glass Card -->
+                <div class="glass-card glass-card-hover p-6 space-y-5">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-arrows-spin text-cyanAccent-400"></i>
+                        Software Development Life Cycle (SDLC)
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Software development follows a structured, cyclical lifecycle divided into six critical sequential stages:
+                    </p>
+
+                    <!-- SDLC SVG Graphic -->
+                    <div class="bg-slate-950/80 rounded-2xl border border-white/5 p-4 flex justify-center">
+                        <svg class="w-full max-w-md h-auto" viewBox="0 0 400 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="200" cy="105" r="70" stroke="#334155" stroke-width="2" stroke-dasharray="6 6" />
+                            <defs>
+                                <linearGradient id="sdlcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4f46e5" />
+                                    <stop offset="100%" stop-color="#06b6d4" />
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- SDLC Nodes -->
+                            <g transform="translate(200, 25)">
+                                <rect x="-48" y="-15" width="96" height="30" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                <text x="0" y="4" font-size="10" fill="#ffffff" font-weight="600" text-anchor="middle">1. Planning</text>
+                            </g>
+                            <g transform="translate(295, 65)">
+                                <rect x="-48" y="-15" width="96" height="30" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                <text x="0" y="4" font-size="10" fill="#ffffff" font-weight="600" text-anchor="middle">2. Analysis</text>
+                            </g>
+                            <g transform="translate(295, 145)">
+                                <rect x="-48" y="-15" width="96" height="30" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                <text x="0" y="4" font-size="10" fill="#ffffff" font-weight="600" text-anchor="middle">3. Design</text>
+                            </g>
+                            <g transform="translate(200, 185)">
+                                <rect x="-48" y="-15" width="96" height="30" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                <text x="0" y="4" font-size="10" fill="#ffffff" font-weight="600" text-anchor="middle">4. Coding</text>
+                            </g>
+                            <g transform="translate(105, 145)">
+                                <rect x="-48" y="-15" width="96" height="30" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                <text x="0" y="4" font-size="10" fill="#ffffff" font-weight="600" text-anchor="middle">5. Testing</text>
+                            </g>
+                            <g transform="translate(105, 65)">
+                                <rect x="-48" y="-15" width="96" height="30" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                <text x="0" y="4" font-size="10" fill="#ffffff" font-weight="600" text-anchor="middle">6. Maintain</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Software Categories List -->
+                    <div class="space-y-2 pt-1 text-xs sm:text-sm">
+                        <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-900/60 border border-white/5">
+                            <i class="fa-solid fa-server text-cyanAccent-400 mt-1"></i>
+                            <div>
+                                <span class="font-bold text-white">Systems Software:</span>
+                                <p class="text-slate-400 text-xs">Directly controls hardware resources (e.g., Windows, macOS, Linux).</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-900/60 border border-white/5">
+                            <i class="fa-solid fa-laptop-code text-brand-400 mt-1"></i>
+                            <div>
+                                <span class="font-bold text-white">Application Software:</span>
+                                <p class="text-slate-400 text-xs">Performs user-defined tasks (e.g., Browsers, Office Suites, Games).</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-900/60 border border-white/5">
+                            <i class="fa-solid fa-screwdriver-wrench text-roseAccent-400 mt-1"></i>
+                            <div>
+                                <span class="font-bold text-white">Software Tools:</span>
+                                <p class="text-slate-400 text-xs">Languages and tools used to construct software (e.g., Python, C++, Java).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HTTLAP Problem Solving Framework Glass Card -->
+                <div class="glass-card glass-card-hover p-6 space-y-5">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-graduation-cap text-amber-400"></i>
+                        HTTLAP Framework (Paul Vickers)
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300">
+                        Structured methodology for problem-solving from <em>How to THINK Like a Programmer</em>:
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-cyanAccent-500/20 hover:border-cyanAccent-500/40 transition-colors">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded bg-cyanAccent-500/20 text-cyanAccent-400 font-bold font-mono">U</span>
+                                <span class="font-bold text-white text-sm">Understand</span>
+                            </div>
+                            <p class="text-slate-400">Determine problem type, remove ambiguity, identify knowns/unknowns.</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-brand-500/20 hover:border-brand-500/40 transition-colors">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 font-bold font-mono">P</span>
+                                <span class="font-bold text-white text-sm">Plan</span>
+                            </div>
+                            <p class="text-slate-400">Represent graphically or numerically; identify underlying patterns.</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-roseAccent-500/20 hover:border-roseAccent-500/40 transition-colors">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded bg-roseAccent-500/20 text-roseAccent-400 font-bold font-mono">S</span>
+                                <span class="font-bold text-white text-sm">Solve</span>
+                            </div>
+                            <p class="text-slate-400">Structure logic observing Sequence, Selection, and Iteration constructs.</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-emerald-500/20 hover:border-emerald-500/40 transition-colors">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono">A</span>
+                                <span class="font-bold text-white text-sm">Assess</span>
+                            </div>
+                            <p class="text-slate-400">Verify logic thoroughly using distinct sets of input test data.</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-amber-500/20 hover:border-amber-500/40 transition-colors">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold font-mono">R</span>
+                                <span class="font-bold text-white text-sm">Reflect</span>
+                            </div>
+                            <p class="text-slate-400">Maintain a learning journal; identify generalization possibilities.</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-indigo-500/20 hover:border-indigo-500/40 transition-colors">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-bold font-mono">D</span>
+                                <span class="font-bold text-white text-sm">Document</span>
+                            </div>
+                            <p class="text-slate-400">Explain logic clearly so future engineers can maintain and update code.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">A</span><strong>Action / Solve</strong>
-              <div class="item-details">
-                Write down your solution. Pay attention to sequence, selection, and iteration.
-              </div>
+            <!-- Essential Techniques Grid -->
+            <div class="glass-card p-6 space-y-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-puzzle-piece text-cyanAccent-400"></i>
+                    Essential Problem-Solving Techniques
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
+                        <span class="text-cyanAccent-400 font-bold text-sm block">Visual Representation</span>
+                        <p class="text-slate-400">Tables, diagrams, and flowcharts reduce cognitive load and structure relationships.</p>
+                    </div>
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
+                        <span class="text-brand-400 font-bold text-sm block">Simpler Analogous Task</span>
+                        <p class="text-slate-400">Solve a scaled-down version first with fewer variables and minimal data points.</p>
+                    </div>
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
+                        <span class="text-roseAccent-400 font-bold text-sm block">Pattern Identification</span>
+                        <p class="text-slate-400">Uncover mathematical or logical repetitions to establish re-usable functions.</p>
+                    </div>
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
+                        <span class="text-emerald-400 font-bold text-sm block">Intelligent Guessing</span>
+                        <p class="text-slate-400">Eliminate impossible options systematically to increase guess accuracy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SESSION 2 CONTENT ================= -->
+        <section id="session2" class="tab-content hidden space-y-8">
+            <!-- Title Banner -->
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-1 flex items-center gap-3">
+                    <span class="p-2 bg-brand-500/20 text-brand-400 rounded-lg text-lg flex items-center justify-center">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </span>
+                    Session 2: Representing Solutions
+                </h2>
+                <p class="text-slate-300 text-sm ml-11">Algorithms, Programming Constructs, Flowchart Modeling, and Pseudocode Guidelines.</p>
             </div>
 
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">A</span><strong>Assess</strong>
-              <div class="item-details">
-                Never assume the result is correct. Test with different inputs and verify consistency.
-              </div>
+            <!-- Path Pipeline Banner -->
+            <div class="glass-card p-6">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-route text-brand-400"></i>
+                    The Path from Problem to Executable Program
+                </h3>
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-brand-500/30 w-full sm:w-1/3 text-center">
+                        <p class="text-xs text-cyanAccent-400 uppercase font-extrabold tracking-wider">Step 1: Concept</p>
+                        <p class="font-bold text-white text-base mt-1">Problem Solution</p>
+                        <p class="text-xs text-slate-400 mt-1">Natural language & formulas</p>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-brand-400 text-xl hidden sm:block"></i>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-brand-500/30 w-full sm:w-1/3 text-center">
+                        <p class="text-xs text-brand-400 uppercase font-extrabold tracking-wider">Step 2: Model</p>
+                        <p class="font-bold text-white text-base mt-1">Algorithmic Model</p>
+                        <p class="text-xs text-slate-400 mt-1">Pseudocode & Flowcharts</p>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-brand-400 text-xl hidden sm:block"></i>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-brand-500/30 w-full sm:w-1/3 text-center">
+                        <p class="text-xs text-roseAccent-400 uppercase font-extrabold tracking-wider">Step 3: Code</p>
+                        <p class="font-bold text-white text-base mt-1">Implementation</p>
+                        <p class="text-xs text-slate-400 mt-1">Python, Java, C++, etc.</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">R</span><strong>Reflect</strong>
-              <div class="item-details">
-                Keep a learning journal. Reflect on strengths, weaknesses, and generalise solutions.
-              </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 3 Fundamental Constructs -->
+                <div class="glass-card glass-card-hover p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-cubes text-cyanAccent-400"></i>
+                        3 Fundamental Constructs
+                    </h3>
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-cyanAccent-500/20">
+                            <span class="font-bold text-cyanAccent-400 text-base block mb-0.5">1. Sequence</span>
+                            <p class="text-slate-300">The exact logical order in which statements and instructions execute sequentially line-by-line.</p>
+                        </div>
+                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-brand-500/20">
+                            <span class="font-bold text-brand-400 text-base block mb-0.5">2. Selection</span>
+                            <p class="text-slate-300">Branching logic where paths are selected dynamically based on evaluating condition expressions (e.g., <code class="bg-slate-900 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono">IF / ELSE</code>).</p>
+                        </div>
+                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-roseAccent-500/20">
+                            <span class="font-bold text-roseAccent-400 text-base block mb-0.5">3. Iteration</span>
+                            <p class="text-slate-300">Repeating a sequence block until a specific logical condition is satisfied (e.g., <code class="bg-slate-900 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono">FOR</code>, <code class="bg-slate-900 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono">WHILE</code> loops).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Standard Flowchart Symbols -->
+                <div class="glass-card glass-card-hover p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-shapes text-roseAccent-400"></i>
+                        Standard Flowchart Symbols
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
+                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
+                                <rect x="5" y="5" width="50" height="20" rx="10" fill="#4f46e5" stroke="#818cf8" stroke-width="1.5"/>
+                            </svg>
+                            <div>
+                                <p class="font-bold text-white">Start / End</p>
+                                <p class="text-slate-400">Terminators</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
+                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
+                                <rect x="5" y="5" width="50" height="20" rx="2" fill="#06b6d4" stroke="#22d3ee" stroke-width="1.5"/>
+                            </svg>
+                            <div>
+                                <p class="font-bold text-white">Process</p>
+                                <p class="text-slate-400">Action / Math</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
+                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
+                                <polygon points="12,25 55,25 48,5 5,5" fill="#10b981" stroke="#34d399" stroke-width="1.5"/>
+                            </svg>
+                            <div>
+                                <p class="font-bold text-white">Input / Output</p>
+                                <p class="text-slate-400">Data I/O</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
+                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
+                                <polygon points="30,3 55,15 30,27 5,15" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
+                            </svg>
+                            <div>
+                                <p class="font-bold text-white">Decision</p>
+                                <p class="text-slate-400">Conditional path</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400">Sequence flow directions are rendered using explicit arrows running top-to-bottom.</p>
+                </div>
             </div>
 
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">D</span><strong>Document</strong>
-              <div class="item-details">
-                Ensure readability so future programmers can easily understand your method.
-              </div>
+            <!-- Pseudocode Rules -->
+            <div class="glass-card p-6 space-y-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-code text-emerald-400"></i>
+                    Gaddis Pseudocode Conventions
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono bg-slate-950 p-4 rounded-xl border border-white/10">
+                    <div>
+                        <p class="text-cyanAccent-400 font-bold mb-2">// Gaddis Standard Pseudocode Example</p>
+                        <p class="text-brand-400 font-bold">PROGRAM SnackVending</p>
+                        <p class="pl-3 text-slate-300">1. OUTPUT "Process payment";</p>
+                        <p class="pl-3 text-slate-300">2. OUTPUT "Make selection";</p>
+                        <p class="pl-3 text-slate-300">3. OUTPUT "Dispense snack";</p>
+                        <p class="pl-3 text-slate-300">4. OUTPUT "Return change";</p>
+                        <p class="text-brand-400 font-bold">END</p>
+                    </div>
+                    <div class="text-slate-300 font-sans space-y-2">
+                        <p class="font-bold text-white text-sm">Key Pseudocode Guidelines:</p>
+                        <ul class="list-disc list-inside space-y-1.5 text-xs text-slate-400">
+                            <li>Enclosed using <code class="bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono">PROGRAM &lt;Name&gt;</code> and <code class="bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono">END</code> keywords.</li>
+                            <li>Keywords are strictly UPPERCASE (<code class="text-emerald-400 font-mono">DECLARE</code>, <code class="text-emerald-400 font-mono">SET</code>, <code class="text-emerald-400 font-mono">INPUT</code>, <code class="text-emerald-400 font-mono">OUTPUT</code>).</li>
+                            <li>Each statement occupies its own line ending with a semicolon (<code class="text-emerald-400 font-mono font-bold">;</code>).</li>
+                            <li>Sequential statement lines are numbered explicitly.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
+        </section>
 
-        <div class="card">
-          <h2>Problem-Solving Techniques</h2>
-          <ul>
-            <li><strong>Visual Representation:</strong> Diagrams, tables, and charts.</li>
-            <li><strong>Simpler Analogous Problems:</strong> Solve smaller versions first.</li>
-            <li><strong>Finding Patterns:</strong> Leverage structural logic.</li>
-            <li><strong>Intelligent Guessing:</strong> Systematic elimination.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- S1: MINDSET -->
-      <div id="s1-mindset" class="tab-panel">
-        <div class="card">
-          <h2>Mindset & Detail Orientation</h2>
-          <ul>
-            <li><strong>Mathematical Reasoning:</strong> Essential logical base for programmers.</li>
-            <li><strong>Analytical Deconstruction:</strong> Check for all failure points.</li>
-            <li><strong>Continuous Refactoring:</strong> Never assume code is optimal because it runs.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>Historical Pioneers in Computing</h2>
-          <div class="grid-container">
-            <div class="interactive-item">
-              <strong>Ada Lovelace (1843)</strong>
-              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">First computer programmer; wrote algorithms for Charles Babbage's engine.</p>
-            </div>
-            <div class="interactive-item">
-              <strong>Kathleen Booth (1946–1962)</strong>
-              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Invented assembly language and built assemblers at Birkbeck.</p>
-            </div>
-            <div class="interactive-item">
-              <strong>Xia Peisu (1960)</strong>
-              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Developed Model 107, China's first electronic computer.</p>
-            </div>
-            <div class="interactive-item">
-              <strong>Steve Wozniak (1970s)</strong>
-              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Designed Apple-I and Apple-II personal computers.</p>
-            </div>
-            <div class="interactive-item">
-              <strong>Dr. Gladys Mae West (1985)</strong>
-              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">Calculated mathematical models enabling GPS precision.</p>
-            </div>
-            <div class="interactive-item">
-              <strong>Raj Reddy (1994)</strong>
-              <p style="margin:4px 0 0; font-size:0.82rem; color:var(--text-muted);">AI Pioneer and Turing Award recipient.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- S1: QUIZ -->
-      <div id="s1-quiz" class="tab-panel">
-        <div class="card">
-          <h2>Session 1 Self-Test</h2>
-          <p style="font-size:0.88rem;">Tap card to flip answer:</p>
-          <div class="flashcard" id="s1-card" onclick="flipFlashcard('s1')">
-            <span id="s1-card-text">Loading...</span>
-          </div>
-          <div class="controls">
-            <button class="btn" onclick="prevFlashcard('s1')">Prev</button>
-            <span id="s1-card-counter" style="font-size:0.85rem;">1 / 5</span>
-            <button class="btn" onclick="nextFlashcard('s1')">Next</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- SESSION 2 CONTAINER -->
-    <!-- ================================================================= -->
-    <div id="session2-container" style="display:none;">
-      <nav class="nav-tabs">
-        <button class="tab-btn active" onclick="switchSubTab('s2', 'algorithms')">Algorithms</button>
-        <button class="tab-btn" onclick="switchSubTab('s2', 'constructs')">3 Constructs</button>
-        <button class="tab-btn" onclick="switchSubTab('s2', 'flowcharts')">Flowcharts</button>
-        <button class="tab-btn" onclick="switchSubTab('s2', 'pseudocode')">Pseudocode</button>
-        <button class="tab-btn" onclick="switchSubTab('s2', 'testing')">Testing</button>
-        <button class="tab-btn" onclick="switchSubTab('s2', 'quiz')">Quiz</button>
-      </nav>
-
-      <!-- S2: ALGORITHMS -->
-      <div id="s2-algorithms" class="tab-panel active">
-        <div class="card">
-          <h2>Solution to Program Pipeline</h2>
-          <p>Express natural language solutions as algorithms before writing code:</p>
-          
-          <div class="diagram-box">
-            <svg viewBox="0 0 500 80">
-              <rect x="10" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-              <text x="75" y="44" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Solution</text>
-
-              <line x1="145" y1="40" x2="180" y2="40" stroke="#38bdf8" stroke-width="2"/>
-
-              <rect x="185" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-              <text x="250" y="44" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Algorithm</text>
-
-              <line x1="320" y1="40" x2="355" y2="40" stroke="#0284c7" stroke-width="2"/>
-
-              <rect x="360" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="2"/>
-              <text x="425" y="44" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Program</text>
-            </svg>
-          </div>
-
-          <ul>
-            <li><strong>Algorithm:</strong> A finite, structured set of step-by-step instructions.</li>
-            <li><strong>Computer Models:</strong> Simplified representations to simulate systems safely.</li>
-            <li><strong>Generalisability:</strong> Algorithms solve all variations of a given problem.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>Abstraction & Optimisation</h2>
-          <ul>
-            <li><strong>Abstraction:</strong> Removing unnecessary lower-level detail. Uses <em>Hierarchical Task Analysis (HTA)</em> or <em>Top-Down Refinement</em>.</li>
-            <li><strong>Optimal Algorithm:</strong>
-              <ol>
-                <li>Uses minimum execution steps.</li>
-                <li>Avoids errors under unforeseen conditions.</li>
-                <li>Features modular components designed for reusability.</li>
-              </ol>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- S2: CONSTRUCTS -->
-      <div id="s2-constructs" class="tab-panel">
-        <div class="card">
-          <h2>3 Basic Constructs</h2>
-          <p>Any computational problem can be solved using these three constructs:</p>
-          
-          <div class="grid-container">
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">1</span><strong>Sequence</strong>
-              <div class="item-details">
-                The precise logical order in which steps are executed.
-              </div>
+        <!-- ================= SESSION 3 CONTENT ================= -->
+        <section id="session3" class="tab-content hidden space-y-8">
+            <!-- Title Banner -->
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-1 flex items-center gap-3">
+                    <span class="p-2 bg-brand-500/20 text-brand-400 rounded-lg text-lg flex items-center justify-center">
+                        <i class="fa-solid fa-database"></i>
+                    </span>
+                    Session 3: Input, Output, and Data Operations
+                </h2>
+                <p class="text-slate-300 text-sm ml-11">Data Types, RAM Variable Allocation, Arithmetic Operators, and File I/O Handling.</p>
             </div>
 
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">2</span><strong>Selection</strong>
-              <div class="item-details">
-                Branching execution paths based on logical conditions (IF/ELSE).
-              </div>
+            <!-- Data Types Table -->
+            <div class="glass-card p-6 space-y-4 overflow-hidden">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-table text-cyanAccent-400"></i>
+                    Basic Data Types
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 text-slate-400 uppercase text-xs">
+                                <th class="py-3 px-4">Category</th>
+                                <th class="py-3 px-4">Data Type</th>
+                                <th class="py-3 px-4">Description</th>
+                                <th class="py-3 px-4">Sample Values</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 text-slate-300">
+                            <tr class="hover:bg-slate-900/40 transition-colors">
+                                <td class="py-3 px-4 font-semibold text-white" rowspan="2">Textual</td>
+                                <td class="py-3 px-4 font-mono text-cyanAccent-400 font-bold">Character</td>
+                                <td class="py-3 px-4">Single letter, symbol, or punctuation mark</td>
+                                <td class="py-3 px-4 font-mono text-amber-300">"C", "?", " "</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40 transition-colors">
+                                <td class="py-3 px-4 font-mono text-cyanAccent-400 font-bold">String</td>
+                                <td class="py-3 px-4">Ordered collection of text characters</td>
+                                <td class="py-3 px-4 font-mono text-amber-300">"West", "07865453234"</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40 transition-colors">
+                                <td class="py-3 px-4 font-semibold text-white" rowspan="2">Numeric</td>
+                                <td class="py-3 px-4 font-mono text-cyanAccent-400 font-bold">Integer</td>
+                                <td class="py-3 px-4">Whole non-fractional numbers</td>
+                                <td class="py-3 px-4 font-mono text-emerald-400">42, -100, 0</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40 transition-colors">
+                                <td class="py-3 px-4 font-mono text-cyanAccent-400 font-bold">Real / Float</td>
+                                <td class="py-3 px-4">Numbers containing fractional decimal points</td>
+                                <td class="py-3 px-4 font-mono text-emerald-400">99.99, 3.14159</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40 transition-colors">
+                                <td class="py-3 px-4 font-semibold text-white">Boolean</td>
+                                <td class="py-3 px-4 font-mono text-cyanAccent-400 font-bold">Boolean</td>
+                                <td class="py-3 px-4">Logical condition state value</td>
+                                <td class="py-3 px-4 font-mono text-roseAccent-400">true, false</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="interactive-item" onclick="toggleDetails(this)">
-              <span class="step-letter">3</span><strong>Iteration</strong>
-              <div class="item-details">
-                Repeating steps until a condition is met (FOR/WHILE loops).
-              </div>
+            <!-- Variables & RAM Diagram -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card glass-card-hover p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-memory text-emerald-400"></i>
+                        Variables & RAM Memory Concept
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        A <strong>variable</strong> represents a named location in RAM memory created during runtime to store data values that may change during program execution.
+                    </p>
+
+                    <!-- RAM Memory SVG Diagram -->
+                    <div class="bg-slate-950/80 rounded-2xl border border-white/5 p-4 flex justify-center">
+                        <svg class="w-full max-w-xs h-auto" viewBox="0 0 260 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="10" width="230" height="120" rx="12" fill="#070b12" stroke="#10b981" stroke-width="2"/>
+                            <text x="30" y="30" fill="#34d399" font-size="10" font-weight="bold" letter-spacing="1">RAM MEMORY MAP</text>
+
+                            <!-- Memory Cell 1 -->
+                            <rect x="30" y="42" width="95" height="32" rx="6" fill="#121826" stroke="#1e293b"/>
+                            <text x="36" y="54" fill="#94a3b8" font-size="8">name (String)</text>
+                            <text x="36" y="67" fill="#38bdf8" font-size="10" font-weight="bold">"Ian"</text>
+
+                            <!-- Memory Cell 2 -->
+                            <rect x="135" y="42" width="95" height="32" rx="6" fill="#121826" stroke="#1e293b"/>
+                            <text x="141" y="54" fill="#94a3b8" font-size="8">age (Integer)</text>
+                            <text x="141" y="67" fill="#fbbf24" font-size="10" font-weight="bold">21</text>
+
+                            <!-- Memory Cell 3 -->
+                            <rect x="30" y="82" width="200" height="32" rx="6" fill="#121826" stroke="#1e293b"/>
+                            <text x="36" y="94" fill="#94a3b8" font-size="8">lecturer (Boolean)</text>
+                            <text x="36" y="107" fill="#f472b6" font-size="10" font-weight="bold">true</text>
+                        </svg>
+                    </div>
+
+                    <div class="space-y-1 text-xs text-slate-300 pt-1">
+                        <p><strong>Camel Case Rule:</strong> Multi-word variables use <code class="bg-slate-950 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono">camelCase</code> (e.g., <code class="bg-slate-950 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono">personCount</code>).</p>
+                        <p><strong>Declaration Syntax:</strong> <code class="bg-slate-950 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono">DECLARE String carRegistration;</code></p>
+                    </div>
+                </div>
+
+                <!-- Variable States & Special Operators -->
+                <div class="glass-card glass-card-hover p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-calculator text-amber-400"></i>
+                        Variable States & Operators
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-2.5 text-xs">
+                        <div class="p-2.5 bg-slate-950/80 rounded-xl border border-roseAccent-500/20">
+                            <span class="font-bold text-roseAccent-400 block mb-0.5">Undefined</span>
+                            <p class="text-slate-400">Not declared in code scope.</p>
+                        </div>
+                        <div class="p-2.5 bg-slate-950/80 rounded-xl border border-amber-500/20">
+                            <span class="font-bold text-amber-400 block mb-0.5">Null / Uninitialized</span>
+                            <p class="text-slate-400">Declared, no value assigned.</p>
+                        </div>
+                        <div class="p-2.5 bg-slate-950/80 rounded-xl border border-cyanAccent-500/20">
+                            <span class="font-bold text-cyanAccent-400 block mb-0.5">Empty</span>
+                            <p class="text-slate-400">Set to "" or 0.</p>
+                        </div>
+                        <div class="p-2.5 bg-slate-950/80 rounded-xl border border-emerald-500/20">
+                            <span class="font-bold text-emerald-400 block mb-0.5">Assigned</span>
+                            <p class="text-slate-400">Holds valid non-null data.</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 text-xs sm:text-sm">
+                        <p class="font-bold text-white">Special Mathematical Operators:</p>
+                        <ul class="space-y-1.5 text-slate-300 text-xs">
+                            <li><strong class="text-cyanAccent-400">Concatenation (&):</strong> Joins strings together (<code class="bg-slate-950 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono">"Mr " &amp; name</code>).</li>
+                            <li><strong class="text-cyanAccent-400">Modulo (%):</strong> Returns the integer remainder of division (<code class="bg-slate-950 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono">5 % 2 = 1</code>).</li>
+                            <li><strong class="text-cyanAccent-400">Floor Division:</strong> Calculates the integer quotient (<code class="bg-slate-950 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono">int(5 / 2) = 2</code>).</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- S2: FLOWCHARTS -->
-      <div id="s2-flowcharts" class="tab-panel">
-        <div class="card">
-          <h2>Flowchart Standard Symbols</h2>
-          <p>Flowcharts visually show logical constructs vertically in columnar order.</p>
+            <!-- Complete Pseudocode Program Example -->
+            <div class="glass-card p-6 space-y-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-file-code text-brand-400"></i>
+                    Complete Algorithm Example (Keyboard & File I/O)
+                </h3>
+                <pre class="bg-slate-950 p-4 rounded-xl border border-white/10 text-xs font-mono text-emerald-400 overflow-x-auto leading-relaxed">
+PROGRAM SheepAndChickens
+    DECLARE Integer sheep, chickens, legs, animals;
+    DECLARE String result;
 
-          <div class="table-wrapper">
-            <table class="symbol-table">
-              <thead>
-                <tr>
-                  <th class="symbol-svg-cell">Shape</th>
-                  <th>Name</th>
-                  <th>Purpose</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="symbol-svg-cell">
-                    <svg width="60" height="28" viewBox="0 0 60 28">
-                      <rect x="2" y="2" width="56" height="24" rx="12" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                    </svg>
-                  </td>
-                  <td><strong>Oval</strong></td>
-                  <td>Start / End entry or termination.</td>
-                </tr>
-                <tr>
-                  <td class="symbol-svg-cell">
-                    <svg width="60" height="20" viewBox="0 0 60 20">
-                      <line x1="5" y1="10" x2="48" y2="10" stroke="#38bdf8" stroke-width="2"/>
-                      <polygon points="48,6 56,10 48,14" fill="#38bdf8"/>
-                    </svg>
-                  </td>
-                  <td><strong>Arrow</strong></td>
-                  <td>Direction of control flow.</td>
-                </tr>
-                <tr>
-                  <td class="symbol-svg-cell">
-                    <svg width="60" height="28" viewBox="0 0 60 28">
-                      <polygon points="10,4 56,4 48,24 2,24" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                    </svg>
-                  </td>
-                  <td><strong>Parallelogram</strong></td>
-                  <td>Input / Output operations.</td>
-                </tr>
-                <tr>
-                  <td class="symbol-svg-cell">
-                    <svg width="60" height="28" viewBox="0 0 60 28">
-                      <rect x="2" y="4" width="56" height="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                    </svg>
-                  </td>
-                  <td><strong>Rectangle</strong></td>
-                  <td>Internal process / calculations.</td>
-                </tr>
-                <tr>
-                  <td class="symbol-svg-cell">
-                    <svg width="60" height="30" viewBox="0 0 60 30">
-                      <polygon points="30,2 56,15 30,28 4,15" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                    </svg>
-                  </td>
-                  <td><strong>Diamond</strong></td>
-                  <td>Conditional Decision point.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    // Manual Keyboard Input
+    OUTPUT "Enter number of legs:";
+    INPUT legs;
+    OUTPUT "Enter number of animals:";
+    INPUT animals;
 
-      <!-- S2: PSEUDOCODE -->
-      <div id="s2-pseudocode" class="tab-panel">
-        <div class="card">
-          <h2>Pseudocode Standards (Gaddis Style)</h2>
-          <ul>
-            <li>Each statement is numbered on its own line ending with `;`.</li>
-            <li>Begins with <code>PROGRAM &lt;Title&gt;</code> and ends with <code>END</code>.</li>
-            <li>Keywords are written in UPPERCASE.</li>
-          </ul>
+    // Calculations
+    SET sheep = (legs - animals * 2) / 2;
+    SET chickens = animals - sheep;
+    SET result = "Sheep=" & sheep & " Chickens=" & chickens;
 
-          <div class="code-box">
-PROGRAM &lt;SnackVending&gt;<br>
-1. Process payment;<br>
-2. Make selection;<br>
-3. Dispense snack;<br>
-4. Return change;<br>
-END
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Pros & Cons of Pseudocode</h2>
-          <div class="grid-container">
-            <div class="interactive-item">
-              <strong style="color:var(--accent);">Advantages</strong>
-              <ul style="font-size:0.82rem; margin-top:4px; color:var(--text-muted);">
-                <li>Language independent; easy to read.</li>
-                <li>Focuses strictly on logic.</li>
-              </ul>
+    // Output & File Handling
+    OUTPUT result;
+    OPEN "results.txt" mode write;
+    WRITE result;
+    CLOSE;
+END</pre>
             </div>
-            <div class="interactive-item">
-              <strong style="color:#ef4444;">Disadvantages</strong>
-              <ul style="font-size:0.82rem; margin-top:4px; color:var(--text-muted);">
-                <li>Time-consuming to update manually.</li>
-                <li>Cannot be directly executed on a computer.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+        </section>
 
-      <!-- S2: TESTING -->
-      <div id="s2-testing" class="tab-panel">
-        <div class="card">
-          <h2>4 Testing Stages</h2>
-          <ol>
-            <li><strong>1. Unit Testing:</strong> Testing individual functions/modules.</li>
-            <li><strong>2. Integration Testing:</strong> Verifying modules work together.</li>
-            <li><strong>3. System Testing:</strong> Usability and accessibility evaluation.</li>
-            <li><strong>4. Acceptance Testing:</strong> User satisfaction check.</li>
-          </ol>
-        </div>
-      </div>
+    </main>
 
-      <!-- S2: QUIZ -->
-      <div id="s2-quiz" class="tab-panel">
-        <div class="card">
-          <h2>Session 2 Self-Test</h2>
-          <p style="font-size:0.88rem;">Tap card to flip answer:</p>
-          <div class="flashcard" id="s2-card" onclick="flipFlashcard('s2')">
-            <span id="s2-card-text">Loading...</span>
-          </div>
-          <div class="controls">
-            <button class="btn" onclick="prevFlashcard('s2')">Prev</button>
-            <span id="s2-card-counter" style="font-size:0.85rem;">1 / 5</span>
-            <button class="btn" onclick="nextFlashcard('s2')">Next</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Footer -->
+    <footer class="bg-slate-950/80 border-t border-white/10 py-5 text-center text-xs text-slate-500 mt-auto">
+        <p>Problem Solving for Programming • Birkbeck College, University of London</p>
+    </footer>
 
-    <!-- ================================================================= -->
-    <!-- SESSION 3 CONTAINER -->
-    <!-- ================================================================= -->
-    <div id="session3-container" style="display:none;">
-      <nav class="nav-tabs">
-        <button class="tab-btn active" onclick="switchSubTab('s3', 'io')">IPO Model</button>
-        <button class="tab-btn" onclick="switchSubTab('s3', 'datatypes')">Data Types</button>
-        <button class="tab-btn" onclick="switchSubTab('s3', 'variables')">Variables & Naming</button>
-        <button class="tab-btn" onclick="switchSubTab('s3', 'operators')">Operators & BODMAS</button>
-        <button class="tab-btn" onclick="switchSubTab('s3', 'files')">File I/O</button>
-        <button class="tab-btn" onclick="switchSubTab('s3', 'quiz')">Quiz</button>
-      </nav>
+    <!-- Tab Navigation JavaScript Logic -->
+    <script>
+        function switchTab(tabId) {
+            // Hide all contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('block');
+            });
 
-      <!-- S3: IPO MODEL -->
-      <div id="s3-io" class="tab-panel active">
-        <div class="card">
-          <h2>Input-Processing-Output (IPO) Model</h2>
-          <p>Algorithms process input data to transform it into meaningful information output:</p>
-          
-          <div class="diagram-box">
-            <svg viewBox="0 0 500 80">
-              <rect x="10" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-              <text x="75" y="44" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">INPUT</text>
+            // Reset tab button states
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-400');
+            });
 
-              <line x1="145" y1="40" x2="180" y2="40" stroke="#38bdf8" stroke-width="2"/>
+            // Show current tab
+            const targetContent = document.getElementById(tabId);
+            if (targetContent) {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('block');
+            }
 
-              <rect x="185" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-              <text x="250" y="44" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">PROCESSING</text>
-
-              <line x1="320" y1="40" x2="355" y2="40" stroke="#38bdf8" stroke-width="2"/>
-
-              <rect x="360" y="20" width="130" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-              <text x="425" y="44" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">OUTPUT</text>
-            </svg>
-          </div>
-
-          <ul>
-            <li><strong>Input Sources:</strong> Keyboard/mouse (manual), files/databases (stored), or sensors.</li>
-            <li><strong>Processing:</strong> Data manipulation, logic execution, and mathematical operations.</li>
-            <li><strong>Output Destinations:</strong> Screen displays, terminal outputs, or text/database files.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- S3: DATA TYPES -->
-      <div id="s3-datatypes" class="tab-panel">
-        <div class="card">
-          <h2>Core Programming Data Types</h2>
-          <div class="table-wrapper">
-            <table class="symbol-table">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Data Type</th>
-                  <th>Description & Format</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td rowspan="2"><strong>Textual</strong></td>
-                  <td><code>Character</code></td>
-                  <td>Single symbol/letter enclosed in quotes (e.g. <code>"C"</code>, <code>"?"</code>).</td>
-                </tr>
-                <tr>
-                  <td><code>String</code></td>
-                  <td>Sequence of characters enclosed in double quotes (e.g. <code>"West"</code>).</td>
-                </tr>
-                <tr>
-                  <td rowspan="2"><strong>Numeric</strong></td>
-                  <td><code>Integer</code></td>
-                  <td>Whole numbers without decimals (e.g. <code>21</code>, <code>-10</code>).</td>
-                </tr>
-                <tr>
-                  <td><code>Real / Float</code></td>
-                  <td>Decimal numbers with fractional values (e.g. <code>999.99</code>).</td>
-                </tr>
-                <tr>
-                  <td><strong>Logical</strong></td>
-                  <td><code>Boolean</code></td>
-                  <td>Evaluates strictly to <code>true</code> or <code>false</code>.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- S3: VARIABLES & NAMING -->
-      <div id="s3-variables" class="tab-panel">
-        <div class="card">
-          <h2>Variables & Memory Allocation</h2>
-          <p>A <strong>variable</strong> is a named location in RAM memory used to store and update data during runtime.</p>
-          
-          <ul>
-            <li><strong>Declaration:</strong> Declares variable name and data type using <code>DECLARE</code> (e.g. <code>DECLARE String name;</code>).</li>
-            <li><strong>Initialization / Assignment:</strong> Assigning an initial value with <code>SET</code> (e.g. <code>SET name = "Ian";</code>).</li>
-            <li><strong>Variable States:</strong>
-              <ul>
-                <li><em>Undefined:</em> Not declared yet.</li>
-                <li><em>Null / Uninitialized:</em> Declared, but no value assigned.</li>
-                <li><em>Empty:</em> Set to <code>""</code> or <code>0</code>.</li>
-                <li><em>Assigned:</em> Holds a valid non-null value.</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>Naming Rules & camelCase</h2>
-          <ul>
-            <li>Must start with a letter and contain no spaces or special punctuation.</li>
-            <li>Cannot use reserved programming keywords or language identifiers.</li>
-            <li><strong>camelCase Standard:</strong> First word lowercase, subsequent words capitalized (e.g. <code>personCount</code>).</li>
-            <li><strong>Constants:</strong> Values that remain fixed throughout execution (e.g. <code>SET PI = 3.142;</code>).</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- S3: OPERATORS & BODMAS -->
-      <div id="s3-operators" class="tab-panel">
-        <div class="card">
-          <h2>Math & String Operators</h2>
-          <ul>
-            <li><strong>Concatenation (&):</strong> Joins strings together (e.g. <code>"Mr " & name</code>).</li>
-            <li><strong>Arithmetic Operators:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>.</li>
-            <li><strong>Modulo (%):</strong> Returns integer remainder of division (e.g. <code>5 % 2</code> evaluates to <code>1</code>).</li>
-            <li><strong>Floor / Integer Division:</strong> Uses <code>int(5 / 2)</code> to extract only the quotient (<code>2</code>).</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>Operator Precedence (BODMAS)</h2>
-          <ol>
-            <li><strong>B</strong>rackets</li>
-            <li><strong>O</strong>rder / Exponents</li>
-            <li><strong>D</strong>ivision & <strong>M</strong>ultiplication</li>
-            <li><strong>A</strong>ddition & <strong>S</strong>ubtraction</li>
-          </ol>
-          <p style="font-size:0.85rem; color:var(--text-muted);">Operators of equal precedence evaluate from left to right.</p>
-        </div>
-      </div>
-
-      <!-- S3: FILE I/O -->
-      <div id="s3-files" class="tab-panel">
-        <div class="card">
-          <h2>Keyboard vs. Stored File I/O</h2>
-          <p>Pseudocode syntax for manual input and file handling:</p>
-
-          <h3 style="color:var(--accent); font-size:1rem; margin-top:10px;">Keyboard I/O Example:</h3>
-          <div class="code-box">
-PROGRAM<br>
-DECLARE String firstName;<br>
-OUTPUT "Enter your name";<br>
-INPUT firstName;<br>
-OUTPUT "Hello " & firstName;<br>
-END
-          </div>
-
-          <h3 style="color:var(--accent); font-size:1rem; margin-top:15px;">File READ / WRITE Example:</h3>
-          <div class="code-box">
-PROGRAM<br>
-DECLARE String name;<br>
-OPEN "name.txt" mode read;<br>
-READ name;<br>
-CLOSE;<br>
-<br>
-OPEN "output.txt" mode write;<br>
-WRITE "Mr " & name;<br>
-CLOSE;<br>
-END
-          </div>
-        </div>
-      </div>
-
-      <!-- S3: QUIZ -->
-      <div id="s3-quiz" class="tab-panel">
-        <div class="card">
-          <h2>Session 3 Self-Test</h2>
-          <p style="font-size:0.88rem;">Tap card to flip answer:</p>
-          <div class="flashcard" id="s3-card" onclick="flipFlashcard('s3')">
-            <span id="s3-card-text">Loading...</span>
-          </div>
-          <div class="controls">
-            <button class="btn" onclick="prevFlashcard('s3')">Prev</button>
-            <span id="s3-card-counter" style="font-size:0.85rem;">1 / 5</span>
-            <button class="btn" onclick="nextFlashcard('s3')">Next</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    // Session Switcher
-    function switchSession(sessionId) {
-      const s1Container = document.getElementById('session1-container');
-      const s2Container = document.getElementById('session2-container');
-      const s3Container = document.getElementById('session3-container');
-      const s1Btn = document.getElementById('s1-main-btn');
-      const s2Btn = document.getElementById('s2-main-btn');
-      const s3Btn = document.getElementById('s3-main-btn');
-
-      s1Container.style.display = 'none';
-      s2Container.style.display = 'none';
-      s3Container.style.display = 'none';
-
-      s1Btn.className = 'session-btn';
-      s2Btn.className = 'session-btn';
-      s3Btn.className = 'session-btn';
-
-      if (sessionId === 's1') {
-        s1Container.style.display = 'block';
-        s1Btn.className = 'session-btn active';
-      } else if (sessionId === 's2') {
-        s2Container.style.display = 'block';
-        s2Btn.className = 'session-btn active';
-      } else {
-        s3Container.style.display = 'block';
-        s3Btn.className = 'session-btn active';
-      }
-    }
-
-    // Sub-Tab Switcher
-    function switchSubTab(sessionPrefix, tabId) {
-      const activeContainerId = `${sessionPrefix === 's1' ? 'session1' : sessionPrefix === 's2' ? 'session2' : 'session3'}-container`;
-      const container = document.getElementById(activeContainerId);
-      
-      container.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-      container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      
-      document.getElementById(`${sessionPrefix}-${tabId}`).classList.add('active');
-      event.currentTarget.classList.add('active');
-    }
-
-    // Toggle Collapsible Step Details
-    function toggleDetails(element) {
-      const details = element.querySelector('.item-details');
-      if (details) {
-        const isVisible = details.style.display === 'block';
-        details.style.display = isVisible ? 'none' : 'block';
-      }
-    }
-
-    // Flashcard System State
-    const quizData = {
-      s1: {
-        index: 0,
-        flipped: false,
-        cards: [
-          { q: "What is the primary goal of this module?", a: "To teach foundational problem-solving skills needed to program in ANY language." },
-          { q: "Where is most time spent during software development?", a: "Solving problems, rather than writing actual code." },
-          { q: "What are the 6 stages of the SDLC?", a: "1. Planning, 2. Analysis, 3. Design, 4. Implementation, 5. Testing/Integration, 6. Maintenance." },
-          { q: "What does HTTLAP stand for?", a: "Understand, Plan, Action (Solve), Assess, Reflect, Document." },
-          { q: "Who wrote the first assembly language at Birkbeck College?", a: "Kathleen Booth (1946–1962)." }
-        ]
-      },
-      s2: {
-        index: 0,
-        flipped: false,
-        cards: [
-          { q: "What is an algorithm?", a: "A finite, structured set of step-by-step instructions designed to complete a task." },
-          { q: "What are the 3 core algorithmic constructs?", a: "Sequence, Selection, and Iteration." },
-          { q: "Which flowchart shape represents Input and Output?", a: "A Parallelogram." },
-          { q: "Which pseudocode keyword style is used in this module?", a: "The Gaddis Book Style (UPPERCASE keywords, numbered lines ending in semicolons)." },
-          { q: "What are the 4 chronological stages of software testing?", a: "1. Unit testing, 2. Integration testing, 3. System testing, 4. Acceptance testing." }
-        ]
-      },
-      s3: {
-        index: 0,
-        flipped: false,
-        cards: [
-          { q: "What are the 3 stages of the IPO model?", a: "Input, Processing, and Output." },
-          { q: "Which data type stores whole numbers without decimal points?", a: "Integer." },
-          { q: "What is camelCase naming?", a: "First word lowercase, first letter of subsequent words capitalized (e.g., personCount)." },
-          { q: "What result does the expression 5 % 2 yield?", a: "1 (the remainder of integer division)." },
-          { q: "Which keywords handle file input/output in Gaddis pseudocode?", a: "OPEN, READ, WRITE, and CLOSE." }
-        ]
-      }
-    };
-
-    function updateFlashcard(session) {
-      const state = quizData[session];
-      const textEl = document.getElementById(`${session}-card-text`);
-      const counterEl = document.getElementById(`${session}-card-counter`);
-      
-      state.flipped = false;
-      textEl.innerText = state.cards[state.index].q;
-      counterEl.innerText = `${state.index + 1} / ${state.cards.length}`;
-    }
-
-    function flipFlashcard(session) {
-      const state = quizData[session];
-      const textEl = document.getElementById(`${session}-card-text`);
-      state.flipped = !state.flipped;
-      textEl.innerText = state.flipped ? state.cards[state.index].a : state.cards[state.index].q;
-    }
-
-    function nextFlashcard(session) {
-      const state = quizData[session];
-      state.index = (state.index + 1) % state.cards.length;
-      updateFlashcard(session);
-    }
-
-    function prevFlashcard(session) {
-      const state = quizData[session];
-      state.index = (state.index - 1 + state.cards.length) % state.cards.length;
-      updateFlashcard(session);
-    }
-
-    // Initialise Flashcards
-    updateFlashcard('s1');
-    updateFlashcard('s2');
-    updateFlashcard('s3');
-  </script>
+            // Highlight active button
+            const activeBtn = document.getElementById('tab-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('text-slate-400');
+            }
+        }
+    </script>
 </body>
 </html>
