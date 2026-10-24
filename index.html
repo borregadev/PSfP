@@ -3,14 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Problem Solving for Programming</title>
+    <title>Problem Solving for Programming - Interactive Study Hub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome v6 CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Inter Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
-    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -18,15 +13,19 @@
                 extend: {
                     colors: {
                         brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
                             400: '#818cf8',
                             500: '#6366f1',
                             600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#1e1b4b',
                         },
                         cyanAccent: {
                             400: '#22d3ee',
                             500: '#06b6d4',
                         },
-                        roseAccent: {
+                        pinkAccent: {
                             400: '#f472b6',
                             500: '#ec4899',
                         }
@@ -39,26 +38,27 @@
             }
         }
     </script>
-    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
     <style>
         body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: #070b12;
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
-                radial-gradient(circle at 50% 100%, rgba(236, 72, 153, 0.08) 0px, transparent 50%);
+                radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 20%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
+                radial-gradient(at 50% 80%, rgba(236, 72, 153, 0.08) 0px, transparent 50%);
             background-attachment: fixed;
-            color: #cbd5e1;
-            font-family: 'Inter', system-ui, sans-serif;
+            color: #f8fafc;
+            font-size: 18px;
         }
 
-        /* Glassmorphic Container */
         .glass-card {
             background: rgba(18, 24, 38, 0.65);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1rem;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
@@ -72,12 +72,10 @@
             transform: translateY(-2px);
         }
 
-        /* Glow Effects */
         .glow-brand {
-            box-shadow: 0 0 20px -3px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 20px -3px rgba(99, 102, 241, 0.4);
         }
 
-        /* Hide Scrollbar for Nav Pill Row */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -85,580 +83,719 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-
-        /* Active Navigation Pill */
-        .tab-btn.active {
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-            color: #ffffff;
-            box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
-        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white text-base">
+<body class="min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
 
-    <!-- Fixed Top Header -->
-    <header class="bg-slate-950/70 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-gradient-to-br from-brand-600 to-cyanAccent-500 rounded-xl text-white shadow-lg glow-brand flex items-center justify-center">
-                    <i class="fa-solid fa-code text-lg"></i>
+    <!-- Main Header -->
+    <header class="border-b border-white/10 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="p-3 bg-gradient-to-tr from-brand-600 to-cyanAccent-500 text-white rounded-xl shadow-lg shadow-brand-500/20">
+                    <i class="fa-solid fa-code text-2xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-slate-300">
-                        Problem Solving for Programming
-                    </h1>
-                    <p class="text-xs sm:text-sm text-slate-400 font-medium">Birkbeck College • Interactive Lecture & Lab Summary</p>
+                    <h1 class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">Problem Solving for Programming</h1>
+                    <p class="text-sm text-brand-400 font-semibold">Interactive Master Study Guide</p>
                 </div>
+            </div>
+
+            <!-- Session Switcher Tabs -->
+            <div class="flex items-center bg-slate-900/90 p-1.5 rounded-xl border border-white/10 gap-1.5 shadow-inner">
+                <button id="session-1-btn" onclick="switchSession('1')" class="px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand">
+                    <i class="fa-solid fa-brain text-base"></i> Session 1
+                </button>
+                <button id="session-2-btn" onclick="switchSession('2')" class="px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-sitemap text-base"></i> Session 2
+                </button>
+                <button id="session-3-btn" onclick="switchSession('3')" class="px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-terminal text-base"></i> Session 3
+                </button>
             </div>
         </div>
-
-        <!-- Sticky Tab Navigation Bar -->
-        <nav class="bg-slate-950/40 border-t border-white/5 px-4 sm:px-6 lg:px-8 py-2">
-            <div class="max-w-7xl mx-auto flex items-center space-x-2.5 overflow-x-auto no-scrollbar" id="tabNav">
-                <button onclick="switchTab('session1')" id="tab-session1" class="tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-slate-800/50 transition-all whitespace-nowrap flex items-center gap-2">
-                    <i class="fa-solid fa-brain text-sm"></i>
-                    Session 1: Programming & Problem Solving
-                </button>
-                <button onclick="switchTab('session2')" id="tab-session2" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-slate-800/50 transition-all whitespace-nowrap flex items-center gap-2">
-                    <i class="fa-solid fa-sitemap text-sm"></i>
-                    Session 2: Representing Solutions
-                </button>
-                <button onclick="switchTab('session3')" id="tab-session3" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-slate-800/50 transition-all whitespace-nowrap flex items-center gap-2">
-                    <i class="fa-solid fa-terminal text-sm"></i>
-                    Session 3: I/O & Data Operations
-                </button>
-            </div>
-        </nav>
     </header>
 
-    <!-- Main Canvas -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-
-        <!-- ================= SESSION 1 CONTENT ================= -->
-        <section id="session1" class="tab-content block space-y-6">
-            <!-- Title Banner -->
-            <div>
-                <h2 class="text-xl sm:text-2xl font-bold text-white mb-1 flex items-center gap-3">
-                    <span class="p-2 bg-brand-500/20 text-brand-400 rounded-lg text-base flex items-center justify-center">
-                        <i class="fa-solid fa-lightbulb"></i>
-                    </span>
-                    Session 1: Programming & Problem Solving
-                </h2>
-                <p class="text-slate-400 text-xs sm:text-sm ml-11">Core concepts, Software Development Life Cycle (SDLC), and the HTTLAP problem-solving framework.</p>
+    <!-- Sub-Navigation Bar Session 1 -->
+    <nav id="session-1-nav" class="session-nav bg-slate-950/80 border-b border-white/10 sticky top-[81px] z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-2 overflow-x-auto no-scrollbar py-3">
+                <button onclick="switchTab('s1-part-a')" id="btn-s1-part-a" class="s1-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand">
+                    <i class="fa-solid fa-arrows-spin"></i> Part A: SDLC Lifecycle
+                </button>
+                <button onclick="switchTab('s1-part-b')" id="btn-s1-part-b" class="s1-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-graduation-cap"></i> Part B: HTTLAP Framework
+                </button>
+                <button onclick="switchTab('s1-part-c')" id="btn-s1-part-c" class="s1-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-puzzle-piece"></i> Part C: Solving Techniques
+                </button>
             </div>
+        </div>
+    </nav>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- SDLC Glass Card -->
-                <div class="glass-card glass-card-hover p-6 space-y-4">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-arrows-spin text-cyanAccent-400 text-lg"></i>
-                        Software Development Life Cycle (SDLC)
-                    </h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Software development follows a structured, cyclical lifecycle divided into six critical sequential stages:
-                    </p>
+    <!-- Sub-Navigation Bar Session 2 -->
+    <nav id="session-2-nav" class="session-nav hidden bg-slate-950/80 border-b border-white/10 sticky top-[81px] z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-2 overflow-x-auto no-scrollbar py-3">
+                <button onclick="switchTab('s2-part-a')" id="btn-s2-part-a" class="s2-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand">
+                    <i class="fa-solid fa-route"></i> Part A: Solution Pipeline
+                </button>
+                <button onclick="switchTab('s2-part-b')" id="btn-s2-part-b" class="s2-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-cubes"></i> Part B: Core Constructs
+                </button>
+                <button onclick="switchTab('s2-part-c')" id="btn-s2-part-c" class="s2-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-shapes"></i> Part C: Flowcharting
+                </button>
+                <button onclick="switchTab('s2-part-d')" id="btn-s2-part-d" class="s2-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-code"></i> Part D: Gaddis Pseudocode
+                </button>
+            </div>
+        </div>
+    </nav>
 
-                    <!-- SDLC SVG Graphic -->
-                    <div class="bg-slate-950/80 rounded-2xl border border-white/5 p-4 flex justify-center">
-                        <svg class="w-full max-w-md h-auto" viewBox="0 0 400 210" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="200" cy="105" r="70" stroke="#334155" stroke-width="2" stroke-dasharray="6 6" />
-                            <defs>
-                                <linearGradient id="sdlcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#4f46e5" />
-                                    <stop offset="100%" stop-color="#06b6d4" />
-                                </linearGradient>
-                            </defs>
-                            
-                            <!-- SDLC Nodes -->
-                            <g transform="translate(200, 25)">
-                                <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
-                                <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">1. Planning</text>
-                            </g>
-                            <g transform="translate(295, 65)">
-                                <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
-                                <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">2. Analysis</text>
-                            </g>
-                            <g transform="translate(295, 145)">
-                                <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
-                                <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">3. Design</text>
-                            </g>
-                            <g transform="translate(200, 185)">
-                                <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
-                                <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">4. Coding</text>
-                            </g>
-                            <g transform="translate(105, 145)">
-                                <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
-                                <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">5. Testing</text>
-                            </g>
-                            <g transform="translate(105, 65)">
-                                <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
-                                <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">6. Maintain</text>
-                            </g>
+    <!-- Sub-Navigation Bar Session 3 -->
+    <nav id="session-3-nav" class="session-nav hidden bg-slate-950/80 border-b border-white/10 sticky top-[81px] z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-2 overflow-x-auto no-scrollbar py-3">
+                <button onclick="switchTab('s3-part-a')" id="btn-s3-part-a" class="s3-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand">
+                    <i class="fa-solid fa-table"></i> Part A: Basic Data Types
+                </button>
+                <button onclick="switchTab('s3-part-b')" id="btn-s3-part-b" class="s3-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-memory"></i> Part B: Memory & Variables
+                </button>
+                <button onclick="switchTab('s3-part-c')" id="btn-s3-part-c" class="s3-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-sliders"></i> Part C: Live RAM Evaluator
+                </button>
+                <button onclick="switchTab('s3-part-d')" id="btn-s3-part-d" class="s3-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-file-code"></i> Part D: Complete I/O Program
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ==================== SESSION 1 CONTENT CONTAINER ==================== -->
+        <div id="session-1-content" class="session-container space-y-6">
+
+            <!-- S1 PART A: SDLC -->
+            <section id="s1-part-a" class="tab-content space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-arrows-spin"></i></span>
+                        Session 1 Part A: Software Development Life Cycle (SDLC)
+                    </h2>
+                    <p class="text-slate-300 text-base">Overview of software taxonomy and the structured cyclical workflow of software engineering.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl space-y-4">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-diagram-project text-cyanAccent-400"></i> SDLC Sequential Stage Diagram
+                        </h3>
+                        <div class="bg-slate-950/80 rounded-xl border border-white/5 p-4 flex justify-center">
+                            <svg class="w-full max-w-md h-auto" viewBox="0 0 400 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="200" cy="105" r="70" stroke="#334155" stroke-width="2" stroke-dasharray="6 6" />
+                                <defs>
+                                    <linearGradient id="sdlcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#4f46e5" />
+                                        <stop offset="100%" stop-color="#06b6d4" />
+                                    </linearGradient>
+                                </defs>
+                                <g transform="translate(200, 25)">
+                                    <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                    <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">1. Planning</text>
+                                </g>
+                                <g transform="translate(295, 65)">
+                                    <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                    <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">2. Analysis</text>
+                                </g>
+                                <g transform="translate(295, 145)">
+                                    <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                    <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">3. Design</text>
+                                </g>
+                                <g transform="translate(200, 185)">
+                                    <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                    <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">4. Coding</text>
+                                </g>
+                                <g transform="translate(105, 145)">
+                                    <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                    <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">5. Testing</text>
+                                </g>
+                                <g transform="translate(105, 65)">
+                                    <rect x="-52" y="-16" width="104" height="32" rx="8" fill="url(#sdlcGrad)" stroke="#818cf8" stroke-width="1"/>
+                                    <text x="0" y="5" font-size="12" fill="#ffffff" font-weight="700" text-anchor="middle">6. Maintain</text>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl space-y-3">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-pinkAccent-400"></i> Software Classification
+                        </h3>
+                        <div class="space-y-2.5 text-sm">
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-white/5 space-y-1">
+                                <span class="font-bold text-cyanAccent-400">• Systems Software</span>
+                                <p class="text-slate-300 text-xs">Controls hardware resources directly (e.g. Windows, macOS, Linux kernels).</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-white/5 space-y-1">
+                                <span class="font-bold text-emerald-400">• Application Software</span>
+                                <p class="text-slate-300 text-xs">Performs user end-tasks (e.g. Web Browsers, IDEs, Media Players).</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-white/5 space-y-1">
+                                <span class="font-bold text-pinkAccent-400">• Software Development Tools</span>
+                                <p class="text-slate-300 text-xs">Languages, compilers, and debuggers used to construct software (e.g. Python, C++, Java).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S1 PART B: HTTLAP FRAMEWORK -->
+            <section id="s1-part-b" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-graduation-cap"></i></span>
+                        Session 1 Part B: HTTLAP Problem-Solving Framework
+                    </h2>
+                    <p class="text-slate-300 text-base">Paul Vickers' methodology from <em>How to THINK Like a Programmer</em>.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card glass-card-hover p-5 rounded-2xl space-y-2 border border-cyanAccent-500/20">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white">1. Understand</h3>
+                            <span class="px-2 py-0.5 rounded bg-cyanAccent-500/20 text-cyanAccent-400 font-bold font-mono text-xs">U</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">Determine problem boundaries, eliminate ambiguity, and isolate known inputs vs unknown outputs.</p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-5 rounded-2xl space-y-2 border border-brand-500/20">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white">2. Plan</h3>
+                            <span class="px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 font-bold font-mono text-xs">P</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">Represent relationships graphically or numerically; identify core patterns and baseline algorithms.</p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-5 rounded-2xl space-y-2 border border-pinkAccent-500/20">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white">3. Solve</h3>
+                            <span class="px-2 py-0.5 rounded bg-pinkAccent-500/20 text-pinkAccent-400 font-bold font-mono text-xs">S</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">Structure core logic using standard Sequence, Selection, and Iteration constructs.</p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-5 rounded-2xl space-y-2 border border-emerald-500/20">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white">4. Assess</h3>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono text-xs">A</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">Verify logical robustness thoroughly using diverse sets of valid, boundary, and edge test data.</p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-5 rounded-2xl space-y-2 border border-amber-500/20">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white">5. Reflect</h3>
+                            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold font-mono text-xs">R</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">Maintain a reflective learning log; document reusable abstractions for future problems.</p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-5 rounded-2xl space-y-2 border border-purple-500/20">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white">6. Document</h3>
+                            <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-bold font-mono text-xs">D</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">Annotate code cleanly with meaningful names and comments so peers can maintain the codebase.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S1 PART C: SOLVING TECHNIQUES -->
+            <section id="s1-part-c" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-puzzle-piece"></i></span>
+                        Session 1 Part C: Problem-Solving Techniques
+                    </h2>
+                    <p class="text-slate-300 text-base">Proven strategies for decomposing complex computational tasks.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl space-y-2">
+                        <h3 class="text-lg font-bold text-cyanAccent-400 flex items-center gap-2">
+                            <i class="fa-solid fa-eye"></i> Visual Representation
+                        </h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Draw state diagrams, tables, and flowcharts. Externalizing mental models reduces cognitive load and illuminates hidden edge cases.
+                        </p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl space-y-2">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-compress"></i> Simpler Analogous Task
+                        </h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Scale down the problem parameters first (e.g. solve for an array of 3 items before scaling to 100,000 records).
+                        </p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl space-y-2">
+                        <h3 class="text-lg font-bold text-pinkAccent-400 flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i> Pattern Identification
+                        </h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Search for mathematical, structural, or temporal repetitions to convert manual steps into iterative loops or functions.
+                        </p>
+                    </div>
+
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl space-y-2">
+                        <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+                            <i class="fa-solid fa-filter"></i> Systematic Elimination
+                        </h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Eliminate logically impossible paths first. Narrowing down the solution space increases the precision of targeted guesses.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== SESSION 2 CONTENT CONTAINER ==================== -->
+        <div id="session-2-content" class="session-container hidden space-y-6">
+
+            <!-- S2 PART A: SOLUTION PIPELINE -->
+            <section id="s2-part-a" class="tab-content space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-route"></i></span>
+                        Session 2 Part A: Solution Transformation Pipeline
+                    </h2>
+                    <p class="text-slate-300 text-base">Translating mental models into formal algorithmic representations and executable code.</p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border border-brand-500/20">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center font-mono">
+                        <div class="p-5 bg-slate-950/80 rounded-xl border border-white/10 space-y-2">
+                            <span class="text-xs text-cyanAccent-400 block font-bold uppercase">Step 1: Concept</span>
+                            <span class="text-lg font-bold text-white block">Problem Solution</span>
+                            <p class="text-xs font-sans text-slate-400">Natural language descriptions, domain formulas, and operational goals.</p>
+                        </div>
+                        <div class="p-5 bg-slate-950/80 rounded-xl border border-brand-500/40 space-y-2 glow-brand">
+                            <span class="text-xs text-brand-400 block font-bold uppercase">Step 2: Model</span>
+                            <span class="text-lg font-bold text-white block">Algorithmic Model</span>
+                            <p class="text-xs font-sans text-slate-400">Language-agnostic Pseudocode and Flowchart diagrams.</p>
+                        </div>
+                        <div class="p-5 bg-slate-950/80 rounded-xl border border-emerald-500/30 space-y-2">
+                            <span class="text-xs text-emerald-400 block font-bold uppercase">Step 3: Implementation</span>
+                            <span class="text-lg font-bold text-white block">Executable Program</span>
+                            <p class="text-xs font-sans text-slate-400">Source code ready for compilation or execution (Python, Java, C++).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S2 PART B: CORE CONSTRUCTS -->
+            <section id="s2-part-b" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-cubes"></i></span>
+                        Session 2 Part B: The 3 Fundamental Programming Constructs
+                    </h2>
+                    <p class="text-slate-300 text-base">The foundational building blocks of all imperative software algorithms.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-3 border border-cyanAccent-500/20">
+                        <h3 class="text-lg font-bold text-cyanAccent-400 flex items-center gap-2">
+                            <i class="fa-solid fa-list-ol"></i> 1. Sequence
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Instructions execute strictly line-by-line in sequential order from top to bottom without skipping or jumping.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-3 border border-brand-500/20">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-code-branch"></i> 2. Selection
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Branching logic where execution paths diverge dynamically based on evaluating condition expressions (<code class="text-emerald-400 font-mono">IF / ELSE</code>).
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-3 border border-pinkAccent-500/20">
+                        <h3 class="text-lg font-bold text-pinkAccent-400 flex items-center gap-2">
+                            <i class="fa-solid fa-rotate"></i> 3. Iteration
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Repeating an instruction block until a termination condition evaluates to true (<code class="text-emerald-400 font-mono">FOR</code>, <code class="text-emerald-400 font-mono">WHILE</code> loops).
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S2 PART C: FLOWCHARTING -->
+            <section id="s2-part-c" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-shapes"></i></span>
+                        Session 2 Part C: Standard Flowchart Modeling Symbols
+                    </h2>
+                    <p class="text-slate-300 text-base">Standardized ANSI visual symbols for flowcharting algorithmic control flow.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4 border border-white/10">
+                        <svg class="w-16 h-10 flex-shrink-0" viewBox="0 0 60 30">
+                            <rect x="5" y="5" width="50" height="20" rx="10" fill="#4f46e5" stroke="#818cf8" stroke-width="1.5"/>
                         </svg>
-                    </div>
-
-                    <!-- Software Categories List -->
-                    <div class="space-y-2.5 pt-1 text-xs sm:text-sm">
-                        <div class="flex items-start gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-white/5">
-                            <i class="fa-solid fa-server text-cyanAccent-400 mt-0.5 text-base"></i>
-                            <div>
-                                <span class="font-bold text-white">Systems Software:</span>
-                                <p class="text-slate-300 mt-0.5">Directly controls hardware resources (e.g., Windows, macOS, Linux).</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-white/5">
-                            <i class="fa-solid fa-laptop-code text-brand-400 mt-0.5 text-base"></i>
-                            <div>
-                                <span class="font-bold text-white">Application Software:</span>
-                                <p class="text-slate-300 mt-0.5">Performs user-defined tasks (e.g., Browsers, Office Suites, Games).</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-white/5">
-                            <i class="fa-solid fa-screwdriver-wrench text-roseAccent-400 mt-0.5 text-base"></i>
-                            <div>
-                                <span class="font-bold text-white">Software Tools:</span>
-                                <p class="text-slate-300 mt-0.5">Languages and tools used to construct software (e.g., Python, C++, Java).</p>
-                            </div>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Start / End</h3>
+                            <p class="text-xs text-slate-400 font-mono">Terminator</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- HTTLAP Problem Solving Framework Glass Card -->
-                <div class="glass-card glass-card-hover p-6 space-y-4">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-graduation-cap text-amber-400 text-lg"></i>
-                        HTTLAP Framework (Paul Vickers)
-                    </h3>
-                    <p class="text-xs sm:text-sm text-slate-300">
-                        Structured methodology for problem-solving from <em>How to THINK Like a Programmer</em>:
-                    </p>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
-                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-cyanAccent-500/20 hover:border-cyanAccent-500/40 transition-colors">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 rounded bg-cyanAccent-500/20 text-cyanAccent-400 font-bold font-mono text-xs">U</span>
-                                <span class="font-bold text-white">Understand</span>
-                            </div>
-                            <p class="text-slate-400 text-xs">Determine problem type, remove ambiguity, identify knowns/unknowns.</p>
+                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4 border border-white/10">
+                        <svg class="w-16 h-10 flex-shrink-0" viewBox="0 0 60 30">
+                            <rect x="5" y="5" width="50" height="20" rx="2" fill="#06b6d4" stroke="#22d3ee" stroke-width="1.5"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Process</h3>
+                            <p class="text-xs text-slate-400 font-mono">Calculations / Action</p>
                         </div>
+                    </div>
 
-                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-brand-500/20 hover:border-brand-500/40 transition-colors">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 font-bold font-mono text-xs">P</span>
-                                <span class="font-bold text-white">Plan</span>
-                            </div>
-                            <p class="text-slate-400 text-xs">Represent graphically or numerically; identify underlying patterns.</p>
+                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4 border border-white/10">
+                        <svg class="w-16 h-10 flex-shrink-0" viewBox="0 0 60 30">
+                            <polygon points="12,25 55,25 48,5 5,5" fill="#10b981" stroke="#34d399" stroke-width="1.5"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Input / Output</h3>
+                            <p class="text-xs text-slate-400 font-mono">Data I/O Operations</p>
                         </div>
+                    </div>
 
-                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-roseAccent-500/20 hover:border-roseAccent-500/40 transition-colors">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 rounded bg-roseAccent-500/20 text-roseAccent-400 font-bold font-mono text-xs">S</span>
-                                <span class="font-bold text-white">Solve</span>
-                            </div>
-                            <p class="text-slate-400 text-xs">Structure logic observing Sequence, Selection, and Iteration constructs.</p>
-                        </div>
-
-                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-emerald-500/20 hover:border-emerald-500/40 transition-colors">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono text-xs">A</span>
-                                <span class="font-bold text-white">Assess</span>
-                            </div>
-                            <p class="text-slate-400 text-xs">Verify logic thoroughly using distinct sets of input test data.</p>
-                        </div>
-
-                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-amber-500/20 hover:border-amber-500/40 transition-colors">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold font-mono text-xs">R</span>
-                                <span class="font-bold text-white">Reflect</span>
-                            </div>
-                            <p class="text-slate-400 text-xs">Maintain a learning journal; identify generalization possibilities.</p>
-                        </div>
-
-                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-indigo-500/20 hover:border-indigo-500/40 transition-colors">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-bold font-mono text-xs">D</span>
-                                <span class="font-bold text-white">Document</span>
-                            </div>
-                            <p class="text-slate-400 text-xs">Explain logic clearly so future engineers can maintain and update code.</p>
+                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4 border border-white/10">
+                        <svg class="w-16 h-10 flex-shrink-0" viewBox="0 0 60 30">
+                            <polygon points="30,3 55,15 30,27 5,15" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-base font-bold text-white">Decision</h3>
+                            <p class="text-xs text-slate-400 font-mono">Conditional Branch</p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Essential Techniques Grid -->
-            <div class="glass-card p-6 space-y-4">
-                <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                    <i class="fa-solid fa-puzzle-piece text-cyanAccent-400 text-lg"></i>
-                    Essential Problem-Solving Techniques
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs sm:text-sm">
-                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
-                        <span class="text-cyanAccent-400 font-bold block">Visual Representation</span>
-                        <p class="text-slate-300 text-xs">Tables, diagrams, and flowcharts reduce cognitive load and structure relationships.</p>
-                    </div>
-                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
-                        <span class="text-brand-400 font-bold block">Simpler Analogous Task</span>
-                        <p class="text-slate-300 text-xs">Solve a scaled-down version first with fewer variables and minimal data points.</p>
-                    </div>
-                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
-                        <span class="text-roseAccent-400 font-bold block">Pattern Identification</span>
-                        <p class="text-slate-300 text-xs">Uncover mathematical or logical repetitions to establish re-usable functions.</p>
-                    </div>
-                    <div class="p-4 bg-slate-950/80 rounded-xl border border-white/5 space-y-1.5">
-                        <span class="text-emerald-400 font-bold block">Intelligent Guessing</span>
-                        <p class="text-slate-300 text-xs">Eliminate impossible options systematically to increase guess accuracy.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SESSION 2 CONTENT ================= -->
-        <section id="session2" class="tab-content hidden space-y-6">
-            <!-- Title Banner -->
-            <div>
-                <h2 class="text-xl sm:text-2xl font-bold text-white mb-1 flex items-center gap-3">
-                    <span class="p-2 bg-brand-500/20 text-brand-400 rounded-lg text-base flex items-center justify-center">
-                        <i class="fa-solid fa-network-wired"></i>
-                    </span>
-                    Session 2: Representing Solutions
-                </h2>
-                <p class="text-slate-400 text-xs sm:text-sm ml-11">Algorithms, Programming Constructs, Flowchart Modeling, and Pseudocode Guidelines.</p>
-            </div>
-
-            <!-- Path Pipeline Banner -->
-            <div class="glass-card p-6">
-                <h3 class="text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-2.5">
-                    <i class="fa-solid fa-route text-brand-400 text-lg"></i>
-                    The Path from Problem to Executable Program
-                </h3>
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-brand-500/30 w-full sm:w-1/3 text-center">
-                        <p class="text-[10px] sm:text-xs text-cyanAccent-400 uppercase font-extrabold tracking-wider">Step 1: Concept</p>
-                        <p class="font-bold text-white text-sm sm:text-base mt-0.5">Problem Solution</p>
-                        <p class="text-xs text-slate-400 mt-0.5">Natural language & formulas</p>
-                    </div>
-                    <i class="fa-solid fa-arrow-right text-brand-400 text-lg hidden sm:block"></i>
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-brand-500/30 w-full sm:w-1/3 text-center">
-                        <p class="text-[10px] sm:text-xs text-brand-400 uppercase font-extrabold tracking-wider">Step 2: Model</p>
-                        <p class="font-bold text-white text-sm sm:text-base mt-0.5">Algorithmic Model</p>
-                        <p class="text-xs text-slate-400 mt-0.5">Pseudocode & Flowcharts</p>
-                    </div>
-                    <i class="fa-solid fa-arrow-right text-brand-400 text-lg hidden sm:block"></i>
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-brand-500/30 w-full sm:w-1/3 text-center">
-                        <p class="text-[10px] sm:text-xs text-roseAccent-400 uppercase font-extrabold tracking-wider">Step 3: Code</p>
-                        <p class="font-bold text-white text-sm sm:text-base mt-0.5">Implementation</p>
-                        <p class="text-xs text-slate-400 mt-0.5">Python, Java, C++, etc.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- 3 Fundamental Constructs -->
-                <div class="glass-card glass-card-hover p-6 space-y-4">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-cubes text-cyanAccent-400 text-lg"></i>
-                        3 Fundamental Constructs
-                    </h3>
-                    <div class="space-y-3 text-xs sm:text-sm">
-                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-cyanAccent-500/20">
-                            <span class="font-bold text-cyanAccent-400 text-sm sm:text-base block mb-0.5">1. Sequence</span>
-                            <p class="text-slate-300">The exact logical order in which statements and instructions execute sequentially line-by-line.</p>
-                        </div>
-                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-brand-500/20">
-                            <span class="font-bold text-brand-400 text-sm sm:text-base block mb-0.5">2. Selection</span>
-                            <p class="text-slate-300">Branching logic where paths are selected dynamically based on evaluating condition expressions (e.g., <code class="bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">IF / ELSE</code>).</p>
-                        </div>
-                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-roseAccent-500/20">
-                            <span class="font-bold text-roseAccent-400 text-sm sm:text-base block mb-0.5">3. Iteration</span>
-                            <p class="text-slate-300">Repeating a sequence block until a specific logical condition is satisfied (e.g., <code class="bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">FOR</code>, <code class="bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">WHILE</code> loops).</p>
-                        </div>
-                    </div>
+            <!-- S2 PART D: GADDIS PSEUDOCODE -->
+            <section id="s2-part-d" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-code"></i></span>
+                        Session 2 Part D: Gaddis Pseudocode Conventions
+                    </h2>
+                    <p class="text-slate-300 text-base">Standardized pseudocode rules and structured program encapsulation.</p>
                 </div>
 
-                <!-- Standard Flowchart Symbols -->
-                <div class="glass-card glass-card-hover p-6 space-y-4">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-shapes text-roseAccent-400 text-lg"></i>
-                        Standard Flowchart Symbols
-                    </h3>
-                    <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
-                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
-                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
-                                <rect x="5" y="5" width="50" height="20" rx="10" fill="#4f46e5" stroke="#818cf8" stroke-width="1.5"/>
-                            </svg>
-                            <div>
-                                <p class="font-bold text-white text-xs sm:text-sm">Start / End</p>
-                                <p class="text-slate-400 text-[11px]">Terminators</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
-                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
-                                <rect x="5" y="5" width="50" height="20" rx="2" fill="#06b6d4" stroke="#22d3ee" stroke-width="1.5"/>
-                            </svg>
-                            <div>
-                                <p class="font-bold text-white text-xs sm:text-sm">Process</p>
-                                <p class="text-slate-400 text-[11px]">Action / Math</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
-                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
-                                <polygon points="12,25 55,25 48,5 5,5" fill="#10b981" stroke="#34d399" stroke-width="1.5"/>
-                            </svg>
-                            <div>
-                                <p class="font-bold text-white text-xs sm:text-sm">Input / Output</p>
-                                <p class="text-slate-400 text-[11px]">Data I/O</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5">
-                            <svg class="w-12 h-8 flex-shrink-0" viewBox="0 0 60 30">
-                                <polygon points="30,3 55,15 30,27 5,15" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
-                            </svg>
-                            <div>
-                                <p class="font-bold text-white text-xs sm:text-sm">Decision</p>
-                                <p class="text-slate-400 text-[11px]">Conditional path</p>
-                            </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-3 font-mono text-sm">
+                        <h3 class="text-lg font-bold text-brand-400 font-sans flex items-center gap-2">
+                            <i class="fa-solid fa-file-code text-cyanAccent-400"></i> Encapsulation Template
+                        </h3>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-white/10 space-y-1">
+                            <div class="text-brand-400 font-bold">PROGRAM VendingMachine</div>
+                            <div class="pl-4 text-slate-300">1. OUTPUT "Process payment";</div>
+                            <div class="pl-4 text-slate-300">2. OUTPUT "Dispense item";</div>
+                            <div class="pl-4 text-slate-300">3. OUTPUT "Return change";</div>
+                            <div class="text-brand-400 font-bold">END</div>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-400">Sequence flow directions are rendered using explicit arrows running top-to-bottom.</p>
-                </div>
-            </div>
 
-            <!-- Pseudocode Rules -->
-            <div class="glass-card p-6 space-y-4">
-                <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                    <i class="fa-solid fa-code text-emerald-400 text-lg"></i>
-                    Gaddis Pseudocode Conventions
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm font-mono bg-slate-950 p-4 rounded-xl border border-white/10">
-                    <div>
-                        <p class="text-cyanAccent-400 font-bold mb-1.5 text-xs">// Gaddis Standard Pseudocode Example</p>
-                        <p class="text-brand-400 font-bold">PROGRAM SnackVending</p>
-                        <p class="pl-4 text-slate-300">1. OUTPUT "Process payment";</p>
-                        <p class="pl-4 text-slate-300">2. OUTPUT "Make selection";</p>
-                        <p class="pl-4 text-slate-300">3. OUTPUT "Dispense snack";</p>
-                        <p class="pl-4 text-slate-300">4. OUTPUT "Return change";</p>
-                        <p class="text-brand-400 font-bold">END</p>
-                    </div>
-                    <div class="text-slate-300 font-sans space-y-2.5">
-                        <p class="font-bold text-white text-xs sm:text-sm">Key Pseudocode Guidelines:</p>
-                        <ul class="list-disc list-inside space-y-1.5 text-xs text-slate-300">
-                            <li>Enclosed using <code class="bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">PROGRAM &lt;Name&gt;</code> and <code class="bg-slate-900 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">END</code> keywords.</li>
-                            <li>Keywords are strictly UPPERCASE (<code class="text-emerald-400 font-mono">DECLARE</code>, <code class="text-emerald-400 font-mono">SET</code>, <code class="text-emerald-400 font-mono">INPUT</code>, <code class="text-emerald-400 font-mono">OUTPUT</code>).</li>
-                            <li>Each statement occupies its own line ending with a semicolon (<code class="text-emerald-400 font-mono font-bold">;</code>).</li>
-                            <li>Sequential statement lines are numbered explicitly.</li>
+                    <div class="glass-card p-6 rounded-2xl space-y-3">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-emerald-400"></i> Core Pseudocode Syntax Rules
+                        </h3>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300">
+                            <li class="p-2.5 bg-slate-950/80 rounded-lg border border-white/5">
+                                • Keywords are strictly <strong class="text-emerald-400">UPPERCASE</strong> (<code class="text-cyanAccent-400">DECLARE</code>, <code class="text-cyanAccent-400">SET</code>, <code class="text-cyanAccent-400">INPUT</code>, <code class="text-cyanAccent-400">OUTPUT</code>).
+                            </li>
+                            <li class="p-2.5 bg-slate-950/80 rounded-lg border border-white/5">
+                                • Program blocks are bounded by <code class="text-brand-400">PROGRAM &lt;Name&gt;</code> and <code class="text-brand-400">END</code>.
+                            </li>
+                            <li class="p-2.5 bg-slate-950/80 rounded-lg border border-white/5">
+                                • Statements end with explicit semicolons (<code class="text-amber-400 font-bold">;</code>).
+                            </li>
+                            <li class="p-2.5 bg-slate-950/80 rounded-lg border border-white/5">
+                                • Line statements inside blocks are explicitly numbered sequentially.
+                            </li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- ================= SESSION 3 CONTENT ================= -->
-        <section id="session3" class="tab-content hidden space-y-6">
-            <!-- Title Banner -->
-            <div>
-                <h2 class="text-xl sm:text-2xl font-bold text-white mb-1 flex items-center gap-3">
-                    <span class="p-2 bg-brand-500/20 text-brand-400 rounded-lg text-base flex items-center justify-center">
-                        <i class="fa-solid fa-database"></i>
-                    </span>
-                    Session 3: Input, Output, and Data Operations
-                </h2>
-                <p class="text-slate-400 text-xs sm:text-sm ml-11">Data Types, RAM Variable Allocation, Arithmetic Operators, and File I/O Handling.</p>
-            </div>
+        <!-- ==================== SESSION 3 CONTENT CONTAINER ==================== -->
+        <div id="session-3-content" class="session-container hidden space-y-6">
 
-            <!-- Data Types Table -->
-            <div class="glass-card p-6 space-y-4 overflow-hidden">
-                <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                    <i class="fa-solid fa-table text-cyanAccent-400 text-lg"></i>
-                    Basic Data Types
-                </h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs sm:text-sm border-collapse">
-                        <thead>
-                            <tr class="border-b border-white/10 text-slate-400 uppercase text-[11px] font-semibold">
-                                <th class="py-2.5 px-3">Category</th>
-                                <th class="py-2.5 px-3">Data Type</th>
-                                <th class="py-2.5 px-3">Description</th>
-                                <th class="py-2.5 px-3">Sample Values</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/5 text-slate-300">
-                            <tr class="hover:bg-slate-900/40 transition-colors">
-                                <td class="py-3 px-3 font-bold text-white" rowspan="2">Textual</td>
-                                <td class="py-3 px-3 font-mono text-cyanAccent-400 font-semibold">Character</td>
-                                <td class="py-3 px-3">Single letter, symbol, or punctuation mark</td>
-                                <td class="py-3 px-3 font-mono text-amber-300">"C", "?", " "</td>
-                            </tr>
-                            <tr class="hover:bg-slate-900/40 transition-colors">
-                                <td class="py-3 px-3 font-mono text-cyanAccent-400 font-semibold">String</td>
-                                <td class="py-3 px-3">Ordered collection of text characters</td>
-                                <td class="py-3 px-3 font-mono text-amber-300">"West", "07865453234"</td>
-                            </tr>
-                            <tr class="hover:bg-slate-900/40 transition-colors">
-                                <td class="py-3 px-3 font-bold text-white" rowspan="2">Numeric</td>
-                                <td class="py-3 px-3 font-mono text-cyanAccent-400 font-semibold">Integer</td>
-                                <td class="py-3 px-3">Whole non-fractional numbers</td>
-                                <td class="py-3 px-3 font-mono text-emerald-400">42, -100, 0</td>
-                            </tr>
-                            <tr class="hover:bg-slate-900/40 transition-colors">
-                                <td class="py-3 px-3 font-mono text-cyanAccent-400 font-semibold">Real / Float</td>
-                                <td class="py-3 px-3">Numbers containing fractional decimal points</td>
-                                <td class="py-3 px-3 font-mono text-emerald-400">99.99, 3.14159</td>
-                            </tr>
-                            <tr class="hover:bg-slate-900/40 transition-colors">
-                                <td class="py-3 px-3 font-bold text-white">Boolean</td>
-                                <td class="py-3 px-3 font-mono text-cyanAccent-400 font-semibold">Boolean</td>
-                                <td class="py-3 px-3">Logical condition state value</td>
-                                <td class="py-3 px-3 font-mono text-roseAccent-400">true, false</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- S3 PART A: BASIC DATA TYPES -->
+            <section id="s3-part-a" class="tab-content space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-table"></i></span>
+                        Session 3 Part A: Basic Data Types Taxonomy
+                    </h2>
+                    <p class="text-slate-300 text-base">Primitive data categories, memory representations, and literal value examples.</p>
                 </div>
-            </div>
 
-            <!-- Variables & RAM Diagram -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="glass-card glass-card-hover p-6 space-y-4">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-memory text-emerald-400 text-lg"></i>
-                        Variables & RAM Memory Concept
+                <div class="glass-card rounded-2xl p-6 space-y-4 border border-brand-500/20">
+                    <div class="overflow-x-auto rounded-xl border border-white/10">
+                        <table class="w-full text-center font-mono text-sm">
+                            <thead class="bg-slate-950 text-slate-400 uppercase text-xs">
+                                <tr>
+                                    <th class="p-3 border-b border-white/10 text-cyanAccent-400">Category</th>
+                                    <th class="p-3 border-b border-white/10 text-amber-400">Data Type</th>
+                                    <th class="p-3 border-b border-white/10 text-slate-300">Description</th>
+                                    <th class="p-3 border-b border-white/10 text-emerald-400">Sample Literals</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5 bg-slate-900/40 text-slate-200">
+                                <tr><td class="p-2.5 font-bold font-sans text-white" rowspan="2">Textual</td><td class="p-2.5 text-amber-400 font-bold">Character</td><td class="p-2.5 text-xs text-slate-300 font-sans">Single letter, symbol, or punctuation mark</td><td class="p-2.5 text-emerald-400">'C', '?', ' '</td></tr>
+                                <tr><td class="p-2.5 text-amber-400 font-bold">String</td><td class="p-2.5 text-xs text-slate-300 font-sans">Ordered sequence of characters</td><td class="p-2.5 text-emerald-400">"Birkbeck", "07123"</td></tr>
+                                <tr><td class="p-2.5 font-bold font-sans text-white" rowspan="2">Numeric</td><td class="p-2.5 text-amber-400 font-bold">Integer</td><td class="p-2.5 text-xs text-slate-300 font-sans">Whole non-fractional values</td><td class="p-2.5 text-emerald-400">42, -100, 0</td></tr>
+                                <tr><td class="p-2.5 text-amber-400 font-bold">Real / Float</td><td class="p-2.5 text-xs text-slate-300 font-sans">Numbers with fractional decimal points</td><td class="p-2.5 text-emerald-400">99.99, 3.14159</td></tr>
+                                <tr><td class="p-2.5 font-bold font-sans text-white">Boolean</td><td class="p-2.5 text-amber-400 font-bold">Boolean</td><td class="p-2.5 text-xs text-slate-300 font-sans">Logical state flag</td><td class="p-2.5 text-pinkAccent-400">true, false</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S3 PART B: MEMORY & VARIABLES -->
+            <section id="s3-part-b" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-memory"></i></span>
+                        Session 3 Part B: Memory & Variable Lifecycle
+                    </h2>
+                    <p class="text-slate-300 text-base">RAM allocation, variable states, and standard identifier naming rules.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-3">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-microchip text-emerald-400"></i> Variable Memory Concept
+                        </h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            A <strong>variable</strong> is a named location in RAM memory created during execution to store data values that can change during runtime.
+                        </p>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-white/10 font-mono text-xs space-y-2">
+                            <div class="text-cyanAccent-400">// Variable Declaration & Naming Rules</div>
+                            <div>• <span class="text-brand-400">Camel Case Rule:</span> Multi-word identifiers use <code class="text-emerald-400">camelCase</code> (e.g. <code class="text-emerald-400">personCount</code>).</div>
+                            <div>• <span class="text-brand-400">Declaration:</span> <code class="text-amber-400">DECLARE String studentName;</code></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-3">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-cyanAccent-400"></i> The 4 Variable Lifecycle States
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3 text-xs font-mono">
+                            <div class="p-3 bg-slate-950 rounded-xl border border-white/5 space-y-1">
+                                <span class="text-rose-400 font-bold block">1. Undefined</span>
+                                <p class="text-slate-400 text-[11px] font-sans">Not declared in scope.</p>
+                            </div>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-white/5 space-y-1">
+                                <span class="text-amber-400 font-bold block">2. Uninitialized</span>
+                                <p class="text-slate-400 text-[11px] font-sans">Declared, holds null.</p>
+                            </div>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-white/5 space-y-1">
+                                <span class="text-cyanAccent-400 font-bold block">3. Empty</span>
+                                <p class="text-slate-400 text-[11px] font-sans">Holds "" or 0 value.</p>
+                            </div>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-white/5 space-y-1">
+                                <span class="text-emerald-400 font-bold block">4. Assigned</span>
+                                <p class="text-slate-400 text-[11px] font-sans">Holds valid runtime data.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S3 PART C: LIVE RAM EVALUATOR TOOL -->
+            <section id="s3-part-c" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-sliders"></i></span>
+                        Session 3 Part C: Live RAM State Simulator
+                    </h2>
+                    <p class="text-slate-300 text-base">Dynamically adjust RAM variables to inspect runtime evaluation changes.</p>
+                </div>
+
+                <div class="glass-card p-6 border border-brand-500/20 shadow-xl space-y-4 rounded-2xl">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-memory text-emerald-400"></i> Interactive RAM Cell Inspector
+                        </h3>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <button id="ram-btn-name" onclick="cycleRamVar('name')" class="px-4 py-2 rounded-xl font-mono font-bold text-xs bg-slate-950 text-cyanAccent-400 border border-cyanAccent-500/40">name: "Ian"</button>
+                            <button id="ram-btn-age" onclick="cycleRamVar('age')" class="px-4 py-2 rounded-xl font-mono font-bold text-xs bg-slate-950 text-amber-400 border border-amber-500/40">age: 21</button>
+                            <button id="ram-btn-active" onclick="cycleRamVar('active')" class="px-4 py-2 rounded-xl font-mono font-bold text-xs bg-slate-950 text-emerald-400 border border-emerald-500/40">active: true</button>
+                        </div>
+                    </div>
+                    <div id="ram-live-output" class="p-5 bg-slate-950/90 rounded-2xl border border-white/10 font-mono text-sm space-y-2"></div>
+                </div>
+            </section>
+
+            <!-- S3 PART D: COMPLETE PROGRAM EXAMPLE -->
+            <section id="s3-part-d" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-file-code"></i></span>
+                        Session 3 Part D: Complete Algorithm Implementation
+                    </h2>
+                    <p class="text-slate-300 text-base">Keyboard input, mathematical operations, screen output, and File I/O handling.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 border border-brand-500/20 shadow-xl space-y-4">
+                    <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                        <i class="fa-solid fa-terminal text-cyanAccent-400"></i> Complete Gaddis Program Code
                     </h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        A <strong>variable</strong> represents a named location in RAM memory created during runtime to store data values that may change during program execution.
-                    </p>
-
-                    <!-- RAM Memory SVG Diagram -->
-                    <div class="bg-slate-950/80 rounded-2xl border border-white/5 p-4 flex justify-center">
-                        <svg class="w-full max-w-sm h-auto" viewBox="0 0 260 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="15" y="10" width="230" height="120" rx="12" fill="#070b12" stroke="#10b981" stroke-width="2"/>
-                            <text x="30" y="30" fill="#34d399" font-size="11" font-weight="bold" letter-spacing="1">RAM MEMORY MAP</text>
-
-                            <!-- Memory Cell 1 -->
-                            <rect x="30" y="42" width="95" height="32" rx="6" fill="#121826" stroke="#1e293b"/>
-                            <text x="36" y="54" fill="#94a3b8" font-size="9">name (String)</text>
-                            <text x="36" y="67" fill="#38bdf8" font-size="11" font-weight="bold">"Ian"</text>
-
-                            <!-- Memory Cell 2 -->
-                            <rect x="135" y="42" width="95" height="32" rx="6" fill="#121826" stroke="#1e293b"/>
-                            <text x="141" y="54" fill="#94a3b8" font-size="9">age (Integer)</text>
-                            <text x="141" y="67" fill="#fbbf24" font-size="11" font-weight="bold">21</text>
-
-                            <!-- Memory Cell 3 -->
-                            <rect x="30" y="82" width="200" height="32" rx="6" fill="#121826" stroke="#1e293b"/>
-                            <text x="36" y="94" fill="#94a3b8" font-size="9">lecturer (Boolean)</text>
-                            <text x="36" y="107" fill="#f472b6" font-size="11" font-weight="bold">true</text>
-                        </svg>
-                    </div>
-
-                    <div class="space-y-1.5 text-xs sm:text-sm text-slate-300 pt-1">
-                        <p><strong>Camel Case Rule:</strong> Multi-word variables use <code class="bg-slate-950 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono text-xs">camelCase</code> (e.g., <code class="bg-slate-950 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono text-xs">personCount</code>).</p>
-                        <p><strong>Declaration Syntax:</strong> <code class="bg-slate-950 border border-white/10 px-2 py-0.5 rounded text-emerald-400 font-mono text-xs">DECLARE String carRegistration;</code></p>
-                    </div>
-                </div>
-
-                <!-- Variable States & Special Operators -->
-                <div class="glass-card glass-card-hover p-6 space-y-4">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-calculator text-amber-400 text-lg"></i>
-                        Variable States & Operators
-                    </h3>
-
-                    <div class="grid grid-cols-2 gap-2.5 text-xs sm:text-sm">
-                        <div class="p-3 bg-slate-950/80 rounded-xl border border-roseAccent-500/20">
-                            <span class="font-bold text-roseAccent-400 block mb-0.5">Undefined</span>
-                            <p class="text-slate-400 text-xs">Not declared in code scope.</p>
-                        </div>
-                        <div class="p-3 bg-slate-950/80 rounded-xl border border-amber-500/20">
-                            <span class="font-bold text-amber-400 block mb-0.5">Null / Uninitialized</span>
-                            <p class="text-slate-400 text-xs">Declared, no value assigned.</p>
-                        </div>
-                        <div class="p-3 bg-slate-950/80 rounded-xl border border-cyanAccent-500/20">
-                            <span class="font-bold text-cyanAccent-400 block mb-0.5">Empty</span>
-                            <p class="text-slate-400 text-xs">Set to "" or 0.</p>
-                        </div>
-                        <div class="p-3 bg-slate-950/80 rounded-xl border border-emerald-500/20">
-                            <span class="font-bold text-emerald-400 block mb-0.5">Assigned</span>
-                            <p class="text-slate-400 text-xs">Holds valid non-null data.</p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2 text-xs sm:text-sm">
-                        <p class="font-bold text-white">Special Mathematical Operators:</p>
-                        <ul class="space-y-1.5 text-slate-300 text-xs">
-                            <li><strong class="text-cyanAccent-400">Concatenation (&):</strong> Joins strings together (<code class="bg-slate-950 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">"Mr " &amp; name</code>).</li>
-                            <li><strong class="text-cyanAccent-400">Modulo (%):</strong> Returns the integer remainder of division (<code class="bg-slate-950 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">5 % 2 = 1</code>).</li>
-                            <li><strong class="text-cyanAccent-400">Floor Division:</strong> Calculates the integer quotient (<code class="bg-slate-950 border border-white/10 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">int(5 / 2) = 2</code>).</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Complete Pseudocode Program Example -->
-            <div class="glass-card p-6 space-y-4">
-                <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                    <i class="fa-solid fa-file-code text-brand-400 text-lg"></i>
-                    Complete Algorithm Example (Keyboard & File I/O)
-                </h3>
-                <pre class="bg-slate-950 p-4 rounded-xl border border-white/10 text-xs sm:text-sm font-mono text-emerald-400 overflow-x-auto leading-relaxed">
+                    <pre class="bg-slate-950 p-5 rounded-2xl border border-white/10 text-sm font-mono text-emerald-400 overflow-x-auto leading-relaxed">
 PROGRAM SheepAndChickens
     DECLARE Integer sheep, chickens, legs, animals;
     DECLARE String result;
 
     // Manual Keyboard Input
-    OUTPUT "Enter number of legs:";
+    OUTPUT "Enter total number of legs:";
     INPUT legs;
-    OUTPUT "Enter number of animals:";
+    OUTPUT "Enter total number of animals:";
     INPUT animals;
 
-    // Calculations
+    // Mathematical Calculations
     SET sheep = (legs - animals * 2) / 2;
     SET chickens = animals - sheep;
     SET result = "Sheep=" & sheep & " Chickens=" & chickens;
 
-    // Output & File Handling
+    // Screen Output & File I/O Handling
     OUTPUT result;
     OPEN "results.txt" mode write;
     WRITE result;
     CLOSE;
 END</pre>
-            </div>
-        </section>
+                </div>
+            </section>
+        </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-950/80 border-t border-white/10 py-5 text-center text-xs sm:text-sm text-slate-400 mt-auto">
-        <p>Problem Solving for Programming • Birkbeck College, University of London</p>
-    </footer>
-
-    <!-- Tab Switching Logic -->
+    <!-- JavaScript Navigation & Tool Logic -->
     <script>
+        // Main Session Switcher
+        function switchSession(sessionNum) {
+            document.querySelectorAll('.session-container').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.session-nav').forEach(n => n.classList.add('hidden'));
+
+            const targetContainer = document.getElementById(`session-${sessionNum}-content`);
+            const targetNav = document.getElementById(`session-${sessionNum}-nav`);
+
+            if (targetContainer) targetContainer.classList.remove('hidden');
+            if (targetNav) targetNav.classList.remove('hidden');
+
+            ['1', '2', '3'].forEach(num => {
+                const btn = document.getElementById(`session-${num}-btn`);
+                if (btn) {
+                    btn.className = num === sessionNum
+                        ? 'px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand'
+                        : 'px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50';
+                }
+            });
+
+            if (sessionNum === '1') switchTab('s1-part-a');
+            if (sessionNum === '2') switchTab('s2-part-a');
+            if (sessionNum === '3') switchTab('s3-part-a');
+        }
+
+        // Sub-Tab Switcher
         function switchTab(tabId) {
-            // Hide all tab contents
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.classList.add('hidden');
-                content.classList.remove('block');
-            });
+            let activeSession = '1';
+            if (tabId.startsWith('s2')) activeSession = '2';
+            if (tabId.startsWith('s3')) activeSession = '3';
 
-            // Deactivate all tab buttons
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tab content
-            const activeContent = document.getElementById(tabId);
-            if (activeContent) {
-                activeContent.classList.remove('hidden');
-                activeContent.classList.add('block');
+            const activeContainer = document.getElementById(`session-${activeSession}-content`);
+            if (activeContainer) {
+                activeContainer.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             }
 
-            // Activate selected tab button
-            const activeBtn = document.getElementById('tab-' + tabId);
-            if (activeBtn) {
-                activeBtn.classList.add('active');
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) targetTab.classList.remove('hidden');
+
+            const btnPrefix = `s${activeSession}`;
+            document.querySelectorAll(`.${btnPrefix}-tab-btn`).forEach(btn => {
+                if (btn.id === `btn-${tabId}`) {
+                    btn.className = `${btnPrefix}-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand`;
+                } else {
+                    btn.className = `${btnPrefix}-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50`;
+                }
+            });
+        }
+
+        // Live RAM Simulator State
+        let ramVars = {
+            name: "Ian",
+            age: 21,
+            active: true
+        };
+
+        const nameOptions = ["Ian", "Alice", "Bob", "Clara"];
+        const ageOptions = [21, 30, 45, 19];
+
+        function cycleRamVar(varName) {
+            if (varName === 'name') {
+                let idx = (nameOptions.indexOf(ramVars.name) + 1) % nameOptions.length;
+                ramVars.name = nameOptions[idx];
+            } else if (varName === 'age') {
+                let idx = (ageOptions.indexOf(ramVars.age) + 1) % ageOptions.length;
+                ramVars.age = ageOptions[idx];
+            } else if (varName === 'active') {
+                ramVars.active = !ramVars.active;
+            }
+            updateRamDisplay();
+        }
+
+        function updateRamDisplay() {
+            document.getElementById('ram-btn-name').textContent = `name: "${ramVars.name}"`;
+            document.getElementById('ram-btn-age').textContent = `age: ${ramVars.age}`;
+            document.getElementById('ram-btn-active').textContent = `active: ${ramVars.active}`;
+
+            const output = document.getElementById('ram-live-output');
+            if (output) {
+                output.innerHTML = `
+                    <div class="text-slate-300 mb-2 font-bold">Current RAM Allocation Map:</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="p-3 bg-slate-900 rounded-xl border border-white/5 text-center">
+                            <span class="text-xs text-slate-400 block font-mono">Address 0x01 (String)</span>
+                            <span class="text-cyanAccent-400 font-bold text-base block mt-1">"${ramVars.name}"</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-white/5 text-center">
+                            <span class="text-xs text-slate-400 block font-mono">Address 0x02 (Integer)</span>
+                            <span class="text-amber-400 font-bold text-base block mt-1">${ramVars.age}</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-white/5 text-center">
+                            <span class="text-xs text-slate-400 block font-mono">Address 0x03 (Boolean)</span>
+                            <span class="${ramVars.active ? 'text-emerald-400' : 'text-rose-400'} font-bold text-base block mt-1">${ramVars.active ? 'true' : 'false'}</span>
+                        </div>
+                    </div>
+                `;
             }
         }
+
+        // Initialize on Load
+        window.onload = function() {
+            updateRamDisplay();
+        };
     </script>
 </body>
 </html>
