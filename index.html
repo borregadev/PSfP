@@ -101,15 +101,18 @@
             </div>
 
             <!-- Session Switcher Tabs -->
-            <div class="flex items-center bg-slate-900/90 p-1.5 rounded-xl border border-white/10 gap-1.5 shadow-inner">
-                <button id="session-1-btn" onclick="switchSession('1')" class="px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand">
-                    <i class="fa-solid fa-brain text-base"></i> Session 1
+            <div class="flex items-center bg-slate-900/90 p-1.5 rounded-xl border border-white/10 gap-1.5 shadow-inner flex-wrap justify-center">
+                <button id="session-1-btn" onclick="switchSession('1')" class="px-4 py-2 rounded-lg text-sm sm:text-base font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand">
+                    <i class="fa-solid fa-brain"></i> Session 1
                 </button>
-                <button id="session-2-btn" onclick="switchSession('2')" class="px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
-                    <i class="fa-solid fa-sitemap text-base"></i> Session 2
+                <button id="session-2-btn" onclick="switchSession('2')" class="px-4 py-2 rounded-lg text-sm sm:text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-sitemap"></i> Session 2
                 </button>
-                <button id="session-3-btn" onclick="switchSession('3')" class="px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
-                    <i class="fa-solid fa-terminal text-base"></i> Session 3
+                <button id="session-3-btn" onclick="switchSession('3')" class="px-4 py-2 rounded-lg text-sm sm:text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-terminal"></i> Session 3
+                </button>
+                <button id="session-4-btn" onclick="switchSession('4')" class="px-4 py-2 rounded-lg text-sm sm:text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-code-branch"></i> Session 4
                 </button>
             </div>
         </div>
@@ -167,6 +170,23 @@
                 </button>
                 <button onclick="switchTab('s3-part-d')" id="btn-s3-part-d" class="s3-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
                     <i class="fa-solid fa-file-code"></i> Part D: Complete I/O Program
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sub-Navigation Bar Session 4 -->
+    <nav id="session-4-nav" class="session-nav hidden bg-slate-950/80 border-b border-white/10 sticky top-[81px] z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-2 overflow-x-auto no-scrollbar py-3">
+                <button onclick="switchTab('s4-part-a')" id="btn-s4-part-a" class="s4-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand">
+                    <i class="fa-solid fa-code-merge"></i> Part A: Conditional Operators
+                </button>
+                <button onclick="switchTab('s4-part-b')" id="btn-s4-part-b" class="s4-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-diagram-next"></i> Part B: Selection Types
+                </button>
+                <button onclick="switchTab('s4-part-c')" id="btn-s4-part-c" class="s4-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-solid fa-layer-group"></i> Part C: Nested Logic & SELECT/CASE
                 </button>
             </div>
         </div>
@@ -454,7 +474,7 @@
                         </svg>
                         <div>
                             <h3 class="text-base font-bold text-white">Start / End</h3>
-                            <p class="text-xs text-slate-400 font-mono">Terminator</p>
+                            <p class="text-xs text-slate-400 font-mono">Terminator Oval</p>
                         </div>
                     </div>
 
@@ -464,7 +484,7 @@
                         </svg>
                         <div>
                             <h3 class="text-base font-bold text-white">Process</h3>
-                            <p class="text-xs text-slate-400 font-mono">Calculations / Action</p>
+                            <p class="text-xs text-slate-400 font-mono">Rectangle</p>
                         </div>
                     </div>
 
@@ -474,7 +494,7 @@
                         </svg>
                         <div>
                             <h3 class="text-base font-bold text-white">Input / Output</h3>
-                            <p class="text-xs text-slate-400 font-mono">Data I/O Operations</p>
+                            <p class="text-xs text-slate-400 font-mono">Parallelogram</p>
                         </div>
                     </div>
 
@@ -484,7 +504,7 @@
                         </svg>
                         <div>
                             <h3 class="text-base font-bold text-white">Decision</h3>
-                            <p class="text-xs text-slate-400 font-mono">Conditional Branch</p>
+                            <p class="text-xs text-slate-400 font-mono">Diamond Symbol</p>
                         </div>
                     </div>
                 </div>
@@ -526,10 +546,10 @@
                                 • Program blocks are bounded by <code class="text-brand-400">PROGRAM &lt;Name&gt;</code> and <code class="text-brand-400">END</code>.
                             </li>
                             <li class="p-2.5 bg-slate-950/80 rounded-lg border border-white/5">
-                                • Statements end with explicit semicolons (<code class="text-amber-400 font-bold">;</code>).
+                                • Executable statements end with explicit semicolons (<code class="text-amber-400 font-bold">;</code>).
                             </li>
                             <li class="p-2.5 bg-slate-950/80 rounded-lg border border-white/5">
-                                • Line statements inside blocks are explicitly numbered sequentially.
+                                • Statements inside blocks are explicitly numbered sequentially.
                             </li>
                         </ul>
                     </div>
@@ -562,11 +582,11 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-white/5 bg-slate-900/40 text-slate-200">
-                                <tr><td class="p-2.5 font-bold font-sans text-white" rowspan="2">Textual</td><td class="p-2.5 text-amber-400 font-bold">Character</td><td class="p-2.5 text-xs text-slate-300 font-sans">Single letter, symbol, or punctuation mark</td><td class="p-2.5 text-emerald-400">'C', '?', ' '</td></tr>
-                                <tr><td class="p-2.5 text-amber-400 font-bold">String</td><td class="p-2.5 text-xs text-slate-300 font-sans">Ordered sequence of characters</td><td class="p-2.5 text-emerald-400">"Birkbeck", "07123"</td></tr>
-                                <tr><td class="p-2.5 font-bold font-sans text-white" rowspan="2">Numeric</td><td class="p-2.5 text-amber-400 font-bold">Integer</td><td class="p-2.5 text-xs text-slate-300 font-sans">Whole non-fractional values</td><td class="p-2.5 text-emerald-400">42, -100, 0</td></tr>
-                                <tr><td class="p-2.5 text-amber-400 font-bold">Real / Float</td><td class="p-2.5 text-xs text-slate-300 font-sans">Numbers with fractional decimal points</td><td class="p-2.5 text-emerald-400">99.99, 3.14159</td></tr>
-                                <tr><td class="p-2.5 font-bold font-sans text-white">Boolean</td><td class="p-2.5 text-amber-400 font-bold">Boolean</td><td class="p-2.5 text-xs text-slate-300 font-sans">Logical state flag</td><td class="p-2.5 text-pinkAccent-400">true, false</td></tr>
+                                <tr><td class="p-2.5 font-bold font-sans text-white" rowspan="2">Textual</td><td class="p-2.5 text-amber-400 font-bold">Character</td><td class="p-2.5 text-xs text-slate-300 font-sans">Single letter, symbol, or character</td><td class="p-2.5 text-emerald-400">'C', '?', ' '</td></tr>
+                                <tr><td class="p-2.5 text-amber-400 font-bold">String</td><td class="p-2.5 text-xs text-slate-300 font-sans">Ordered collection of characters</td><td class="p-2.5 text-emerald-400">"Birkbeck", "07123"</td></tr>
+                                <tr><td class="p-2.5 font-bold font-sans text-white" rowspan="2">Numeric</td><td class="p-2.5 text-amber-400 font-bold">Integer</td><td class="p-2.5 text-xs text-slate-300 font-sans">Whole numbers without decimals</td><td class="p-2.5 text-emerald-400">42, -100, 0</td></tr>
+                                <tr><td class="p-2.5 text-amber-400 font-bold">Real / Float</td><td class="p-2.5 text-xs text-slate-300 font-sans">Numbers with decimal points</td><td class="p-2.5 text-emerald-400">99.99, 3.14159</td></tr>
+                                <tr><td class="p-2.5 font-bold font-sans text-white">Boolean</td><td class="p-2.5 text-amber-400 font-bold">Boolean</td><td class="p-2.5 text-xs text-slate-300 font-sans">Logical true or false value</td><td class="p-2.5 text-pinkAccent-400">true, false</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -689,6 +709,149 @@ END</pre>
             </section>
         </div>
 
+        <!-- ==================== SESSION 4 CONTENT CONTAINER ==================== -->
+        <div id="session-4-content" class="session-container hidden space-y-6">
+
+            <!-- S4 PART A: CONDITIONAL OPERATORS -->
+            <section id="s4-part-a" class="tab-content space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-code-merge"></i></span>
+                        Session 4 Part A: Relational & Logical Operators
+                    </h2>
+                    <p class="text-slate-300 text-base">Constructing expressions that evaluate to Boolean true or false states.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-4 border border-cyanAccent-500/20">
+                        <h3 class="text-lg font-bold text-cyanAccent-400 flex items-center gap-2">
+                            <i class="fa-solid fa-equals"></i> Relational Comparison Operators
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left font-mono text-xs">
+                                <thead class="bg-slate-950 text-slate-400">
+                                    <tr>
+                                        <th class="p-2 border-b border-white/10">Op</th>
+                                        <th class="p-2 border-b border-white/10">Meaning</th>
+                                        <th class="p-2 border-b border-white/10 text-emerald-400">Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/5 text-slate-300">
+                                    <tr><td class="p-2 text-amber-400 font-bold">==</td><td class="p-2 font-sans">Is equal to</td><td class="p-2 text-emerald-400">isAdult == true</td></tr>
+                                    <tr><td class="p-2 text-amber-400 font-bold">&gt;</td><td class="p-2 font-sans">Greater than</td><td class="p-2 text-emerald-400">temp &gt; maxTemp</td></tr>
+                                    <tr><td class="p-2 text-amber-400 font-bold">&gt;=</td><td class="p-2 font-sans">Greater or equal</td><td class="p-2 text-emerald-400">bet &gt;= maxBet</td></tr>
+                                    <tr><td class="p-2 text-amber-400 font-bold">&lt;</td><td class="p-2 font-sans">Less than</td><td class="p-2 text-emerald-400">bp &lt; highThreshold</td></tr>
+                                    <tr><td class="p-2 text-amber-400 font-bold">&lt;=</td><td class="p-2 font-sans">Less or equal</td><td class="p-2 text-emerald-400">speed &lt;= speedLimit</td></tr>
+                                    <tr><td class="p-2 text-amber-400 font-bold">!= or &lt;&gt;</td><td class="p-2 font-sans">Not equal to</td><td class="p-2 text-emerald-400">name != userName</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-4 border border-brand-500/20">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-link"></i> Boolean Logical Operators
+                        </h3>
+                        <div class="space-y-3 font-mono text-xs">
+                            <div class="p-3 bg-slate-950 rounded-xl border border-white/5 space-y-1">
+                                <span class="text-brand-400 font-bold">AND ( &amp;&amp; )</span>
+                                <p class="text-slate-300 font-sans text-xs">Returns true only if both expressions are true.</p>
+                                <div class="text-emerald-400">age &gt;= 18 AND hasTicket == true</div>
+                            </div>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-white/5 space-y-1">
+                                <span class="text-cyanAccent-400 font-bold">OR ( || )</span>
+                                <p class="text-slate-300 font-sans text-xs">Returns true if at least one expression is true.</p>
+                                <div class="text-emerald-400">isWeekend == true OR isHoliday == true</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S4 PART B: SELECTION TYPES -->
+            <section id="s4-part-b" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-diagram-next"></i></span>
+                        Session 4 Part B: Single & Dual Alternative Selection
+                    </h2>
+                    <p class="text-slate-300 text-base">Controlling execution paths through conditional IF blocks.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-3 border border-brand-500/20">
+                        <h3 class="text-lg font-bold text-cyanAccent-400 flex items-center gap-2">
+                            <i class="fa-solid fa-turn-down"></i> Single Alternative (IF)
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Executes statement block only when the condition evaluates to true; otherwise skips completely.</p>
+                        <pre class="bg-slate-950 p-4 rounded-xl border border-white/10 text-xs font-mono text-emerald-400">
+IF sugars > 0 THEN
+    OUTPUT "Add " & sugars & " sugars to tea";
+END IF;</pre>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-3 border border-pinkAccent-500/20">
+                        <h3 class="text-lg font-bold text-pinkAccent-400 flex items-center gap-2">
+                            <i class="fa-solid fa-code-fork"></i> Dual Alternative (IF/ELSE)
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Executes True branch if condition evaluates to true, otherwise executes False alternative branch.</p>
+                        <pre class="bg-slate-950 p-4 rounded-xl border border-white/10 text-xs font-mono text-emerald-400">
+IF parcelWeight > 5 THEN
+    OUTPUT "Dispatch Van";
+ELSE
+    OUTPUT "Dispatch Motorbike";
+END IF;</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S4 PART C: NESTED LOGIC & SELECT/CASE -->
+            <section id="s4-part-c" class="tab-content hidden space-y-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 shadow-xl">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                        <span class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl"><i class="fa-solid fa-layer-group"></i></span>
+                        Session 4 Part C: Multi-Way Branching & SELECT/CASE
+                    </h2>
+                    <p class="text-slate-300 text-base">Evaluating complex conditional decision structures and single-variable value matches.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-3 border border-brand-500/20">
+                        <h3 class="text-lg font-bold text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-amber-400"></i> Chain Selection (IF/ELSE/IF)
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Chaining conditional tests sequentially across multiple thresholds.</p>
+                        <pre class="bg-slate-950 p-4 rounded-xl border border-white/10 text-xs font-mono text-emerald-400">
+IF mark >= 70 THEN
+    SET grade = "A";
+ELSE
+    IF mark >= 60 THEN
+        SET grade = "B";
+    ELSE
+        SET grade = "F";
+    END IF;
+END IF;</pre>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-3 border border-emerald-500/20">
+                        <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+                            <i class="fa-solid fa-toggle-on text-cyanAccent-400"></i> SELECT / CASE Structure
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Clean multi-way matching against a single variable or expression value.</p>
+                        <pre class="bg-slate-950 p-4 rounded-xl border border-white/10 text-xs font-mono text-emerald-400">
+SELECT errorCode
+    CASE 0:
+        SET errMsg = "Success";
+    CASE 1:
+        SET errMsg = "File Not Found";
+    DEFAULT:
+        SET errMsg = "Unknown Error";
+END SELECT</pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+
     </main>
 
     <!-- JavaScript Navigation & Tool Logic -->
@@ -704,18 +867,19 @@ END</pre>
             if (targetContainer) targetContainer.classList.remove('hidden');
             if (targetNav) targetNav.classList.remove('hidden');
 
-            ['1', '2', '3'].forEach(num => {
+            ['1', '2', '3', '4'].forEach(num => {
                 const btn = document.getElementById(`session-${num}-btn`);
                 if (btn) {
                     btn.className = num === sessionNum
-                        ? 'px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand'
-                        : 'px-5 py-2.5 rounded-lg text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50';
+                        ? 'px-4 py-2 rounded-lg text-sm sm:text-base font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-md glow-brand'
+                        : 'px-4 py-2 rounded-lg text-sm sm:text-base font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50';
                 }
             });
 
             if (sessionNum === '1') switchTab('s1-part-a');
             if (sessionNum === '2') switchTab('s2-part-a');
             if (sessionNum === '3') switchTab('s3-part-a');
+            if (sessionNum === '4') switchTab('s4-part-a');
         }
 
         // Sub-Tab Switcher
@@ -723,6 +887,7 @@ END</pre>
             let activeSession = '1';
             if (tabId.startsWith('s2')) activeSession = '2';
             if (tabId.startsWith('s3')) activeSession = '3';
+            if (tabId.startsWith('s4')) activeSession = '4';
 
             const activeContainer = document.getElementById(`session-${activeSession}-content`);
             if (activeContainer) {
